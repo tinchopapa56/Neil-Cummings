@@ -13,6 +13,14 @@ builder.Services.AddDbContext<DataContext>(opts=>
 {
     opts.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddCors(opt => 
+{
+    opt.AddPolicy("CorsPolicy", policy => 
+    {
+        policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+        // policy.AllowAnyMethod().AllowAnyHeader()
+    });
+});
 
 var app = builder.Build();
 
