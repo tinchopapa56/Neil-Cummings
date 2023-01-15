@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Application.Activities;
+using Application.Core;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,17 +16,17 @@ builder.Services.AddDbContext<DataContext>(opts=>
 {
     opts.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
 builder.Services.AddCors(opt => 
 {
     opt.AddPolicy("CorsPolicy", policy => 
     {
         // policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://127.0.0.1:5173");
         policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
-        // http://127.0.0.1:5173/
-        // policy.AllowAnyMethod().AllowAnyHeader();
     });
 });
-
+builder.Services.AddMediatR(typeof(Lista.Handler));
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
