@@ -19,7 +19,6 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {
-            // return await _context.Activities.ToListAsync();
             return await Mediator.Send(new Lista.Query());
         }
         [HttpGet("{id}")]
