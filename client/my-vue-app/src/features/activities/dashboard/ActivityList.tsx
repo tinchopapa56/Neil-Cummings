@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { Box, Heading, Link, Image, Text, Divider, HStack, Tag, Wrap, WrapItem, SpaceProps, useColorModeValue, Container, VStack, Stack, Button} from '@chakra-ui/react';
 import { Activity } from '../../../app/models/Interfaces';
-import ActivityDetails from '../details/ActivityDetails';
+import { useStore } from '../../../app/stores/store';
+
 
 interface IBlogTagsProps {
   tags: Array<string>;
@@ -44,95 +45,50 @@ export const BlogAuthor: React.FC<BlogAuthorProps> = (props) => {
 };
 
 interface Props {
-  activities: Activity[],
+  activities: Activity[] | undefined,
 }
 
 const ActivityList: React.FC<Props> = ({activities}) => {
 
-  const [ACTdetails, setACTdetails] = useState<Activity>({
-    id: 0,
-    title:"",
-    date:"",
-    description:"",
-    category:"",
-    city:"",
-    venue:"",
-  });
+  const {activityStore} = useStore();
 
-  // useEffect(()=>{
+  const handleButton = (id: string, ActToDelete?: boolean) => {
+    
 
-  // },[ACTdetails])
+    if(ActToDelete){
+      activityStore.deleteACT(id);
+    } else {
+      activityStore.selectACT(id);
+    }
+  }
 
   return (
     <Container maxW={'7xl'} p="12" w={"100%"}>
       <Heading as="h1">All Activities</Heading>
-
-      <Heading as="h2" marginTop="5">
-        Latest articles
-      </Heading>
-
       <Divider marginTop="5" />
-
-      <Wrap align={"flex-start"} spacing="30px" marginTop="5">
-        {/* <WrapItem width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}> */}
-        <WrapItem flexWrap="wrap" maxW={750} width={"100%"} gap="15px"> 
-          <Box w={350}>
-            <Box borderRadius="lg" overflow="hidden">
-              <Link textDecoration="none" _hover={{ textDecoration: 'none' }}>
-                <Image
-                  transform="scale(1.0)"
-                  src={
-                    'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80'
-                  }
-                  alt="some text"
-                  objectFit="contain"
-                  width="100%"
-                  transition="0.3s ease-in-out"
-                  _hover={{
-                    transform: 'scale(1.05)',
-                  }}
-                />
-              </Link>
-            </Box>
-            <BlogTags tags={['Engineering', 'Product']} marginTop="3" />
-            <Heading fontSize="xl" marginTop="2">
-              <Link textDecoration="none" _hover={{ textDecoration: 'none' }}>
-                Some blog title
-              </Link>
-            </Heading>
-            <Text as="p" fontSize="md" marginTop="2">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </Text>
-            <BlogAuthor
-              name="John Doe"
-              date={new Date('2021-04-06T19:01:27Z')}
-            />
-          </Box>
-
-          {activities.map(activity => (
-            <Box borderRadius="lg" overflow="hidden" key={activity.id} w={350}>
+    {/* <WrapItem width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}> */}
+        <WrapItem flexWrap="wrap" maxW={800} width={"100%"} gap="15px"> 
+          {activities?.map(activity => (
+            <Box w={250} borderRadius="lg" overflow="hidden" key={activity.id}>
                   <Link textDecoration="none" _hover={{ textDecoration: 'none' }}>
-                    <Image
-                      transform="scale(1.0)"
-                      src={
-                        'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80'
-                      }
-                      alt="some text"
-                      objectFit="contain"
-                      width="100%"
-                      transition="0.3s ease-in-out"
-                      _hover={{
-                        transform: 'scale(1.05)',
-                      }}
+                    <Image transform="scale(1.0)" src={   'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80' } alt="some text" objectFit="contain" width="100%" transition="0.3s ease-in-out" _hover={{   transform: 'scale(1.05)', }}
                     />
                   </Link>
                   <BlogTags tags={['Engineering', 'Product']} marginTop="3" />
                 <Heading fontSize="xl" marginTop="2">{activity.title}</Heading>
                 <Text as="p" fontSize="md" marginTop="2">{activity.description}</Text>
-                <Button onClick={() => setACTdetails(activity)} p={4} colorScheme='teal' size='xs'>View</Button>
+                
+                <Stack pt={2} direction={"row"}>
+                  <Button as={Link} href={`/activities/${activity.id}`} onClick={() => handleButton(activity.id, false)} p={4} colorScheme='teal' size='xs'>
+                    Full View
+                  </Button>
+                  <Button onClick={() => handleButton(activity.id, false)} p={4} colorScheme='blue' size='xs'>
+                    View
+                  </Button>
+                  <Button onClick={() => handleButton(activity.id, true)} p={4} colorScheme="red" size='xs'>
+                    Delete
+                  </Button>
+                </Stack>
                   
                 <BlogAuthor
                   name="John Doe"
@@ -140,11 +96,7 @@ const ActivityList: React.FC<Props> = ({activities}) => {
                 />
             </Box>
           ))}
-
         </WrapItem>
-
-        <ActivityDetails ACTDetails={ACTdetails} />
-      </Wrap>
 
     </Container>
   );

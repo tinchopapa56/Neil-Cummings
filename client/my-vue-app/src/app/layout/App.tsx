@@ -1,36 +1,28 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
-import {Box, Text, Stack, Spinner} from "@chakra-ui/react";
+import {Box, Text} from "@chakra-ui/react";
 
 import Navbar from "./Navbar";
-import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 
-import { Activity } from "../models/Interfaces";
+import { ToastContainer } from "react-toastify";
+import { observer } from "mobx-react-lite";
+
+import { Outlet } from "react-router-dom";
 
 function App() {
-  const [activities, setActivities] = useState<Activity[]>([]);
 
   
-    useEffect(()=> {
-      try{
-        const getData = async (): Promise<void> => {
-          const res = await axios.get("http://localhost:5000/api/activities");
-          const resData: Activity[] = res.data
-          // console.log(resData);
-          setActivities(resData);
-        }
-        getData();
-      } catch(err){
-        console.log(err);
-      }
-    },[])
+
   return (
+    <>
+    <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
     <Box>
       <Navbar />
-      <Text>Chakra</Text>
-      <ActivityDashboard activityArr={activities} />
+      <Outlet />
     </Box>
+    </>
+    
   )
 }
 
-export default App
+export default observer(App)

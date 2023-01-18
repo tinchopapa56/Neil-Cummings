@@ -3,12 +3,13 @@ using Persistence;
 using Domain;
 using MediatR; 
 using FluentValidation;
+using Application.Core;
 
 namespace Application.Activities
 {
     public class Create
     {
-        public class Command : IRequest //command = no retorna nada
+        public class Command : IRequest<Result<Unit>> //command = no retorna nada
         {
             public Activity Activity {get;set;}
         }
@@ -21,19 +22,22 @@ namespace Application.Activities
             }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
             {
                 _context = context;
             }
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {   
                 _context.Activities.Add(request.Activity);
-                await _context.SaveChangesAsync();
+
+                var res = await _context.SaveChangesAsync() > 0;
+
+                if(!res) return Result<Unit>.Failure("fails to create ACtivity");
                 
-                return Unit.Value; // =void
+                return Result<Unit>.Success(Unit.Value); // =void
             }
         }
     }

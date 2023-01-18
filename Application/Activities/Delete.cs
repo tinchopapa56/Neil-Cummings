@@ -1,32 +1,37 @@
 using System;
 using Persistence;
 using Domain;
-using MediatR; 
+using MediatR;
+using Application.Core; 
 
 namespace Application.Activities
 {
     public class Delete
     {
-        public class Command : IRequest //command = no retorna nada
+        public class Command : IRequest<Result<Unit>> //command = no retorna nada
         {
             public Guid Id {get;set;}
         }
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
             {
                 _context = context;
             }
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {   
                 var activity = await _context.Activities.FindAsync(request.Id);
 
+
+                if(activity == null) return null;
+
                 _context.Remove(activity);
 
-                await _context.SaveChangesAsync();
-                
-                return Unit.Value; // =void
+                var res = await _context.SaveChangesAsync() > 0;
+                if(!res) return Result<Unit>.Failure("Failed to delete activity");
+
+                return Result<Unit>.Success(Unit.Value); // = void
             }
         }
     }
