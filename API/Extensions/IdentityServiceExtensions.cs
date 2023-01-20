@@ -14,10 +14,12 @@ namespace API.Extensions
             services.AddIdentityCore<AppUser>(opt=>
             {
                 opt.Password.RequireNonAlphanumeric = false;
+                opt.User.RequireUniqueEmail = true;
+                // opt.User.cl
             })
             .AddEntityFrameworkStores<DataContext>();
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("hiper mega super key"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt => 
