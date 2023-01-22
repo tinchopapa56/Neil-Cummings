@@ -1,14 +1,17 @@
 import { Box, Flex, Text, IconButton, Button, Stack, Collapse, Icon, Link, Popover, PopoverTrigger, PopoverContent, useColorModeValue, useBreakpointValue, useDisclosure} from '@chakra-ui/react';
- import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon, UnlockIcon} from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon, UnlockIcon} from "@chakra-ui/icons";
 import { useStore } from '../stores/store';
 
   export default function WithSubnavigation() {
+    const {generalStore} = useStore();
     const { isOpen, onToggle } = useDisclosure();
-    const { activityStore } = useStore();
+    const { activityStore, userStore } = useStore();
+
+    console.log(generalStore.token)
   
     return (
       <Box>
-        <Flex bg= "linear-gradient(135deg, rgb(24,42,115) 0%, rgb(33,138,174) 69%, rgb(32,167,172) 89%) "  color={useColorModeValue('gray.600', 'white')} minH={'60px'} py={{ base: 2 }} px={{ base: 4 }} borderBottom={1} borderStyle={'solid'} borderColor={useColorModeValue('gray.200', 'gray.900')} align={'center'}>
+        <Flex bg="linear-gradient(135deg, rgb(24,42,115) 0%, rgb(33,138,174) 69%, rgb(32,167,172) 89%) "  color={useColorModeValue('gray.600', 'white')} minH={'60px'} py={{ base: 2 }} px={{ base: 4 }} borderBottom={1} borderStyle={'solid'} borderColor={useColorModeValue('gray.200', 'gray.900')} align={'center'}>
           <Flex
             flex={{ base: 1, md: 'auto' }}
             ml={{ base: -2 }}
@@ -37,21 +40,29 @@ import { useStore } from '../stores/store';
             </Flex>
           </Flex>
   
-          <Stack flex={{ base: 1, md: 0 }} justify={'flex-end'} direction={'row'} spacing={6}>
-            <Link href={"/login"} p={".5em 0"} fontSize={'xl'}  _hover={{   textDecoration: 'none'}}>
-              <Button display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} color={'white'} bg={'teal.300'} _hover={{bg: 'teal.400',}}>
-                Sign in
+          <Stack align={"center"} flex={{ base: 1, md: 0 }} justify={'flex-end'} direction={'row'} spacing={6}>
+            {generalStore.token ? (
+              <Button onClick={()=> userStore.logout()} display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} color={'white'} bg={'teal.300'} _hover={{bg: 'teal.400',}}>
+                Log out
               </Button>
-            </Link>
-            <Link href={"/register"} p={".5em 0"} fontSize={'xl'}  _hover={{   textDecoration: 'none'}}>
-              <Button display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} color={'white'} bg={'pink.400'} _hover={{bg: 'pink.300',}}>
-                Sign Up
-              </Button>
-            </Link>
+              ):(
+              <>
+                <Link href={"/login"} p={".5em 0"} fontSize={'xl'}  _hover={{   textDecoration: 'none'}}>
+                  <Button display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} color={'white'} bg={'teal.300'} _hover={{bg: 'teal.400',}}>
+                    Sign in
+                  </Button>
+                </Link>
+                <Link href={"/register"} p={".5em 0"} fontSize={'xl'}  _hover={{   textDecoration: 'none'}}>
+                  <Button display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} color={'white'} bg={'pink.400'} _hover={{bg: 'pink.300',}}>
+                    Sign Up
+                  </Button>
+                </Link>
+              </>
+            )}
             <Link href={"/createActivity"} p={".5em 0"} fontSize={'xl'}  _hover={{   textDecoration: 'none'}}>
-            <Button display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} color={'white'} bg={"green.200"} onClick={()=> activityStore.openForm()} _hover={{bg: 'green.300',}}>
-              Create Activity
-            </Button>
+              <Button display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} color={'white'} bg={"green.200"} onClick={()=> activityStore.openForm()} _hover={{bg: 'green.300',}}>
+                Create Activity
+              </Button>
             </Link>
           </Stack>
         </Flex>

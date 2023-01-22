@@ -1,10 +1,17 @@
 import { AxiosResponse } from "axios";
 import axios from "axios";
-import { Activity } from "../models/Interfaces";
+import { Activity, User, FormValues } from "../models/Interfaces";
+import { store } from "../stores/store";
 
 axios.defaults.baseURL = "http://localhost:5000/api" //NO SE SI ES ESA URLLLLLLLLLLLLL
 
 const resBody = <T> (response: AxiosResponse<T>) => response.data;
+
+axios.interceptors.request.use(config => {
+    const token = store.generalStore.token;
+    if (token && config.headers) config.headers.Authorization = `Bearer ${token}`;
+    return  config;
+})
 
 const requests = {
     get: <T> (url:string) => axios.get<T>(url).then(resBody),
@@ -19,7 +26,15 @@ const Activities = {
     edit: (activityToEdit: Activity) => requests.put<void>("activities", activityToEdit),
     delete: (id: string) => requests.del<void>(`/activities/${id}`)
 }
+
+const Account = {
+    current: () =>  requests.get<User>("/account"),
+    login: (user: FormValues) => requests.post<User>("/account/login", user),
+    register: (user: FormValues) => requests.post<User>("/account/register", user), 
+}
+
 const API_agent = {
-    Activities
+    Activities,
+    Account
 }
 export default API_agent;

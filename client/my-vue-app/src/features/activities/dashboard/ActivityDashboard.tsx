@@ -13,9 +13,6 @@ const ActivityDashboard: React.FC = () => {
 
     const {activityStore} = useStore();
 
-    // useEffect(() => {
-    // },[activityStore.selectedACT])
-  
     useEffect(()=> {
         activityStore.loadActivities();
     }, [activityStore])

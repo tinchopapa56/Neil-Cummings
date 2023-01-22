@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]    //TEMPORAL
     public class ActivitiesController : BaseApiController
     {
 
