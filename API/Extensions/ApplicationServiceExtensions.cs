@@ -1,10 +1,13 @@
 using Persistence;
 using Application.Activities;
+using Application.Interfaces;
 using Application.Core;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Infrastructure.Security;
+
 
 namespace API.Extensions
 {
@@ -31,6 +34,9 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<Create>();
+            services.AddHttpContextAccessor();
+            services.AddScoped<IUserAccessor, UserAccessor>();
+
             return services;
         }
     }

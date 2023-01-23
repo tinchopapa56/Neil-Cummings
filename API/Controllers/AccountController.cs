@@ -42,7 +42,7 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if(await _userManager.Users.AnyAsync(x => x.Username == registerDto.Username ))
+            if(await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username ))
             {
                 return BadRequest("Username is already taken");
             }
@@ -80,7 +80,7 @@ namespace API.Controllers
                     DisplayName = user.DisplayName,
                     Image = null,
                     Token = _tokenService.CreateToken(user),
-                    Username = user.Username                //es userNNNNNNNName    mayus
+                    Username = user.UserName                //es userNNNNNNNName    mayus
                 };
             }
         }

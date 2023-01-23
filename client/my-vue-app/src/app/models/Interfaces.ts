@@ -13,11 +13,11 @@ export interface FormValues {
     email: string,
     password: string,
     displayName?: string,
-    username?: string
+    userName?: string       //userNNNName xq asi es la propr del ASP.net User = userName[mayuscula]
 }
 
 export interface User {
-    username: string,
+    userName: string,       //userNNNName xq asi es la propr del ASP.net User = userName[mayuscula]
     displayName: string,
     token: string,
     image?: string,

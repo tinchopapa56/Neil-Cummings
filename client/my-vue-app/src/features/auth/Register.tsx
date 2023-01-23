@@ -16,7 +16,7 @@ const Register = () => {
       .required('campo obligatorio')
       .min(4, 'mínimo 4 caracteres')
       .max(24, 'máximo 24 caracteres'),
-    username: 
+    userName: 
     yup.string()
       .required('campo obligatorio')
       .min(4, 'mínimo 4 caracteres')
@@ -31,10 +31,10 @@ const Register = () => {
         .required('campo obligatorio'),
         
   })
-
+  //userNNNName xq asi es la propr del ASP.net User = userName[mayuscula]
   const formik = useFormik({
     initialValues: {
-      username: "",
+      userName: "",
       displayName: "",
       email: "",
       password: "",
@@ -63,9 +63,9 @@ const Register = () => {
         <Text fontSize={"4xl"}>REGISTER</Text>
           <Box>
             <Text>Username</Text>
-            <Input name='username'  onChange={ handleChange }  value={ values.username }  onBlur={ handleBlur }  placeholder={'username'} 
+            <Input name='userName'  onChange={ handleChange }  value={ values.userName }  onBlur={ handleBlur }  placeholder={'username'} 
             />
-            {errors.username && <Text color="red.300">{errors.username}</Text>}
+            {errors.userName && <Text color="red.300">{errors.userName}</Text>}
           </Box>
           <Box>
             <Text>Display name</Text>
