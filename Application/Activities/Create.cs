@@ -35,14 +35,16 @@ namespace Application.Activities
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {   
                 /*Attendees creation*/
-                    // var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
-                    // var attendee = new ActAtt
-                    // {
-                    //     AppUser = user,
-                    //     Activity = request.Activity,
-                    //     IsHost = true
-                    // };
-                    // request.Activity.Attendees.Add(attendee);
+                    var user = await _context.Users.FirstOrDefaultAsync(x => 
+                        x.UserName == _userAccessor.GetUsername());
+                        
+                    var attendee = new ActAtt
+                    {
+                        AppUser = user,
+                        Activity = request.Activity,
+                        IsHost = true
+                    };
+                    request.Activity.Attendees.Add(attendee);
                 /*Ends attendees creation*/
 
                 _context.Activities.Add(request.Activity);
