@@ -2,6 +2,7 @@ using Application.Activities;
 using AutoMapper;
 using Application.Perfiles;
 using Domain;
+using Application.LiveComments;
 
 namespace Application.Core
 {
@@ -26,10 +27,13 @@ namespace Application.Core
                 // .ForMember(d => d.FollowersCount, o => o.MapFrom(s => s.Followers.Count))
                 // .ForMember(d => d.FollowingCount, o => o.MapFrom(s => s.Followings.Count))
                 // .ForMember(d => d.Following,
-        //CreateMap<Comment, CommentDto>()
-        //     .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.Author.DisplayName))
-        //     .ForMember(d => d.Username, o => o.MapFrom(s => s.Author.UserName))
-        //     .ForMember(d => d.Image, o => o.MapFrom(s => s.Author.Photos.FirstOrDefault(x => x.IsMain).Url));
+
+            
+        CreateMap<LiveComment, LiveCommentDto>()
+            .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.Author.DisplayName))
+            .ForMember(d => d.Username, o => o.MapFrom(s => s.Author.UserName))
+            .ForMember(d => d.Image, o => o.MapFrom(s => s.Author.Photos.FirstOrDefault(x => x.IsMain).Url));
+       
         // CreateMap<ActivityAttendee, UserActivityDto>()
         //     .ForMember(d => d.Id, o => o.MapFrom(s => s.Activity.Id))
         //     .ForMember(d => d.Date, o => o.MapFrom(s => s.Activity.Date))

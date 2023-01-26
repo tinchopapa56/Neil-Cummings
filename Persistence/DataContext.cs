@@ -12,7 +12,7 @@ public class DataContext : IdentityDbContext<AppUser>
 
     public DbSet<ActAtt> ActAtts {get;set;}
     public DbSet<Photo> Photos {get;set;}
-    //  public DbSet<ActAtt> ActAtts { get; set; }
+    public DbSet<LiveComment> LiveComments {get;set;}
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -30,5 +30,10 @@ public class DataContext : IdentityDbContext<AppUser>
             .HasOne(aa => aa.AppUser)
             .WithMany(u => u.Activities)
             .HasForeignKey(aa => aa.AppUserId);
+
+        builder.Entity<LiveComment>()
+           .HasOne(a => a.Activity)
+           .WithMany(c => c.LiveComments)  
+           .OnDelete(DeleteBehavior.Cascade); //si eliminas una ACT, cascadea y borra los comments 
     }
 }
