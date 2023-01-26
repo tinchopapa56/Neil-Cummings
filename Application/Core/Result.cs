@@ -1,3 +1,5 @@
+using Application.Perfiles;
+
 namespace Application.Core
 {
     public class Result<T> // T =entityobj

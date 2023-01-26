@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Security;
-
+using Infrastructure.photos_I;
 
 namespace API.Extensions
 {
@@ -32,10 +32,13 @@ namespace API.Extensions
             });
             services.AddMediatR(typeof(Lista.Handler));
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<Create>();
             services.AddHttpContextAccessor();
             services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
 
             return services;
         }
