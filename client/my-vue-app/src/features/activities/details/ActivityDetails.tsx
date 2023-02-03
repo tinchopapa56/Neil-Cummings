@@ -1,8 +1,10 @@
 import React, {useEffect} from 'react';
 import { Activity } from '../../../app/models/Interfaces';
 
-import { Heading, Flex, Spinner, Avatar, Box, Center, Text, Stack, Button, Link, Badge, useColorModeValue } from '@chakra-ui/react';
+import { Heading,Image, Icon, Flex, Spinner, Avatar, Box, Center, Text, Stack, Button, Link, Badge, useColorModeValue, Divider } from '@chakra-ui/react';
 import { useStore } from '../../../app/stores/store';
+
+import {UnlockIcon} from "@chakra-ui/icons"
 
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
@@ -10,7 +12,7 @@ import { useParams } from 'react-router-dom';
 const ActivityDetails: React.FC= () => {
 
     const {activityStore} = useStore();
-    const {loadActivity, selectedACT, loading} = activityStore;
+    const {loadActivity, selectedACT, loading, updateAttendance} = activityStore;
 
     const {id} = useParams();
 
@@ -19,34 +21,84 @@ const ActivityDetails: React.FC= () => {
     }, [id, loadActivity] )
     
 
-    const handleClick = (edit: boolean) =>{
-      const clickedACT = (activityStore.selectedACT?.id)
-      if(edit)    activityStore.openForm(clickedACT);
-      if(!edit) activityStore.closeForm();
-    }
+    // const handleClick = (edit: boolean) =>{
+    //   const clickedACT = (activityStore.selectedACT?.id)
+    //   if(edit)    activityStore.openForm(clickedACT);
+    //   if(!edit) activityStore.closeForm();
+    // }
 
   return (
-    <Flex w={"100%"} align={"center"} justify={"center"} h={"80vh"}>
-      {loading ? (<Spinner />
-        ):(
-        <Box maxW={'320px'} w={'full'} bg={useColorModeValue('white', 'gray.900')} boxShadow={'2xl'} rounded={'lg'} p={6} textAlign={'center'}>
-          <Avatar size={'xl'} src={'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ'} mb={4} pos={'relative'} _after={{   content: '""',   w: 4,   h: 4,   bg: 'green.300',   border: '2px solid white',   rounded: 'full',   pos: 'absolute',   bottom: 0,   right: 3, }}/>
-          <Heading fontSize={'2xl'} fontFamily={'body'}> {activityStore.selectedACT?.title} </Heading>
-          <Text fontWeight={600} color={'gray.500'} mb={4}> {selectedACT?.date} </Text>
-          <Text textAlign={'center'} color='gray.700' px={3}>{selectedACT?.description} </Text>
-        
-            {/* 2 BUTTONS */}
-          <Stack mt={8} direction={'row'} spacing={4}>
-            <Button as={Link} href={`/manage/${selectedACT?.id}`} onClick={() => handleClick(true) } flex={1} fontSize={'sm'} rounded={'full'} _focus={{   bg: 'gray.200', }}>
-              Edit
-            </Button>
-            <Button as={Link} href={"/join"} onClick={() => handleClick(false) } flex={1} fontSize={'sm'} rounded={'full'} bg={'blue.400'} color={'white'} boxShadow={   '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)' } _hover={{ bg: 'blue.500', }} _focus={{ bg: 'blue.500', }}>
-              Join
-            </Button>
+    <Flex p={4} mt={4} gap={6} w={"100%"} align="flex-start" justify={"center"}>
+      
+      {/* LEFT PART */}
+        <Stack flex="0.75" spacing={4}>
+          <Box borderRadius={"sm"} backgroundColor="blue.100">
+            <Box color="white" height={300} backgroundSize="cover" backgroundImage={selectedACT?.image ? selectedACT.image : "https://wallpapercave.com/wp/wp3638503.jpg"}>
+              <Heading>{activityStore.selectedACT?.title}</Heading>
+              <Text>{activityStore.selectedACT?.date}</Text>
+              <Text>{activityStore.selectedACT?.hostUsername}</Text>
+            </Box>
+            <Flex justify={"space-between"} p={2} direction="row">
+              <Stack direction="row">
+                <Button colorScheme="teal" onClick={updateAttendance}>
+                  {activityStore.selectedACT?.isGoing ? "Cancel attendance" : "Join"}
+                  {/* Join */}
+                </Button>
+                <Button colorScheme="red"  as={Link} href="/activities">Go home</Button>
+              </Stack>
+              <Button  colorScheme="orange">Manage</Button>
+            </Flex>
+          </Box>
 
+          <Stack borderRadius={"sm"} backgroundColor="red.100" divider={<Divider /> }>
+            <Stack align="center" pt={2} pl={4} direction="row">
+              <UnlockIcon color="teal.200" />
+              <Text>{activityStore.selectedACT?.title}</Text>
+            </Stack>
+            <Stack align="center" pt={2} pl={4} direction="row">
+            {/* <Icon as="" /> */}
+              <UnlockIcon color="teal.200" />
+              <Text>{activityStore.selectedACT?.date}</Text>
+            </Stack>
+            <Stack align="center" pt={2} pl={4} direction="row">
+            {/* <Icon as="" /> */}
+              <UnlockIcon color="teal.200"  />
+              <Text>{activityStore.selectedACT?.city}</Text>
+            </Stack>
           </Stack>
+
+          <Box backgroundColor="white.100">
+            <Button w="100%" colorScheme={"teal"}>Comment regarding this event</Button>
+            <Box>
+              {/* <Text>{activityStore.selectedACT?.comment}</Text> */}
+              <Text>aca tengo que agarrar los comments de la ACT</Text>
+              {[].map(comment=>(
+                <Box>
+                  <Avatar src="" />
+                  <Text>username</Text>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </Stack>
+
+      {/* RIGHT PART */}
+        <Box w={300} backgroundColor="green.100">
+          <Box borderTopRadius="md" p={4} textAlign="center" w="100%" backgroundColor="teal.400">
+            <Text color="white">{selectedACT?.attendees.length} People Going</Text>
+          </Box>
+          
+          {selectedACT?.attendees.map((att) => (
+            <Flex p={2} gap={4} key={att.username}>
+              <Avatar src={att.image || ""} size="md" />
+              <Box>
+                <Text>{att.username}</Text>
+                <Text color="orange">Following</Text>
+              </Box>
+            </Flex>
+          ))}
         </Box>
-      )}
+
     </Flex>
     
   );

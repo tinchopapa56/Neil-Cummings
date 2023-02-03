@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { Box, Heading, Link, Image, Text, Divider, HStack, Tag, Wrap, WrapItem, SpaceProps, useColorModeValue, Container, VStack, Stack, Button} from '@chakra-ui/react';
 import { Activity } from '../../../app/models/Interfaces';
-import { useStore } from '../../../app/stores/store';
+import { store, useStore } from '../../../app/stores/store';
+import ActivityAttendees from './ActivityAttendees';
 
+
+// 30 ch por llinea las cards
 
 interface IBlogTagsProps {
   tags: Array<string>;
@@ -24,8 +27,9 @@ const BlogTags: React.FC<IBlogTagsProps> = (props) => {
 };
 
 interface BlogAuthorProps {
-  date: Date;
+  date: Date | any;
   name: string;
+  // userImg: string;
 }
 
 export const BlogAuthor: React.FC<BlogAuthorProps> = (props) => {
@@ -34,12 +38,14 @@ export const BlogAuthor: React.FC<BlogAuthorProps> = (props) => {
       <Image
         borderRadius="full"
         boxSize="40px"
+        // src={props}
         src="https://100k-faces.glitch.me/random-image"
         alt={`Avatar of ${props.name}`}
       />
       <Text fontWeight="medium">{props.name}</Text>
-      <Text>—</Text>
-      <Text>{props.date.toLocaleDateString()}</Text>
+      {/* <Text>_</Text> */}
+      {/* <Text>{props.date.toLocaleDateString()}</Text> */}
+      <Text>{props.date}</Text>
     </HStack>
   );
 };
@@ -48,11 +54,17 @@ interface Props {
   activities: Activity[] | undefined,
 }
 
+
+
+
+
+
 const ActivityList: React.FC<Props> = ({activities}) => {
 
-  const {activityStore} = useStore();
+  const {activityStore, userStore} = useStore();
 
-  const handleButton = (id: string, ActToDelete?: boolean) => {
+
+  const handleDelete = (id: string, ActToDelete?: boolean) => {
     
 
     if(ActToDelete){
@@ -63,11 +75,12 @@ const ActivityList: React.FC<Props> = ({activities}) => {
   }
 
   return (
-    <Container maxW={'7xl'} p="12" w={"100%"}>
+    <Container maxW={'7xl'} p="6" w={"100%"}>
       <Heading as="h1">All Activities</Heading>
       <Divider marginTop="5" />
     {/* <WrapItem width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}> */}
-        <WrapItem flexWrap="wrap" maxW={800} width={"100%"} gap="15px"> 
+        <WrapItem flexWrap="wrap" maxW={800} width={"100%"} gap="15px">
+
           {activities?.map(activity => (
             <Box w={250} borderRadius="lg" overflow="hidden" key={activity.id}>
                   <Link textDecoration="none" _hover={{ textDecoration: 'none' }}>
@@ -78,21 +91,28 @@ const ActivityList: React.FC<Props> = ({activities}) => {
                 <Heading fontSize="xl" marginTop="2">{activity.title}</Heading>
                 <Text as="p" fontSize="md" marginTop="2">{activity.description}</Text>
                 
-                <Stack pt={2} direction={"row"}>
-                  <Button as={Link} href={`/activities/${activity.id}`} onClick={() => handleButton(activity.id, false)} p={4} colorScheme='teal' size='xs'>
-                    Full View
-                  </Button>
-                  <Button onClick={() => handleButton(activity.id, false)} p={4} colorScheme='blue' size='xs'>
-                    View
-                  </Button>
-                  <Button onClick={() => handleButton(activity.id, true)} p={4} colorScheme="red" size='xs'>
-                    Delete
-                  </Button>
+                {activity.isHost && (
+                  <Button variant="outline" color="orange">You are hosting</Button>
+                )}
+                {activity.isGoing && (
+                  <Button variant="outline" color="green">You are going</Button>
+                )}
+
+                <Stack justify="space-between" pt={2} direction={"row"}>
+                  <Button as={Link} href={`/activities/${activity.id}`} p={4} colorScheme='teal' size='xs'>View</Button>
+                  <Button onClick={() => handleDelete(activity.id, true)} p={4} colorScheme="red" size='xs'> Delete</Button>
                 </Stack>
+
+                <Stack pt={4} pb={4} direction="row">
+                  <ActivityAttendees act={activity} />
+                </Stack>
+                
                   
                 <BlogAuthor
-                  name="John Doe"
-                  date={new Date('2021-04-06T19:01:27Z')}
+                  name={ activity.hostUsername ? `${activity.hostUsername}` : 'John Doe'}
+                  date={activity.date}
+                  // userImg={activity.attendees.filter(attendee => attendee.username === activity.hostUsername)}
+                  // date={new Date('2021-04-06T19:01:27Z')}
                 />
             </Box>
           ))}

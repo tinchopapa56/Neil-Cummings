@@ -1,8 +1,8 @@
 import React from 'react';
-import {Button, Text, Stack} from "@chakra-ui/react";
+import {Button, Text, Heading, Stack, Link} from "@chakra-ui/react";
 import axios from 'axios';
 
-export default function TestErrors() {
+export default function ErrorPage() {
     const baseUrl = 'http://localhost:5000/api/'
 
     function handleNotFound() {
@@ -40,6 +40,8 @@ export default function TestErrors() {
                     <Button onClick={handleUnauthorised}> Unauthorised </Button>
                     <Button onClick={handleBadGuid}> Bad Guid </Button>
             </Stack>
+            <Heading as="h1">There was an error...Go back to activities</Heading>
+            <Button as={Link}>Activities</Button>
         </>
     )
 }

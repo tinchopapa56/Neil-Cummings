@@ -2,6 +2,7 @@ using Domain;
 using Application.Activities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Application.Core;
 
 namespace API.Controllers
 {
@@ -10,10 +11,11 @@ namespace API.Controllers
     {
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetActivities()
+        // public async Task<IActionResult> GetActivities()
+        public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
         {
-            var res = await Mediator.Send(new Lista.Query());
-            return HandleResult(res);
+            var res = await Mediator.Send(new Lista.Query{Params = param});
+            return HandlePagedResult(res);
         }
         // [Authorize]
         [HttpGet("{id}")]

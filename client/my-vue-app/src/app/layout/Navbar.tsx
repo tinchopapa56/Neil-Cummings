@@ -7,7 +7,7 @@ import { useStore } from '../stores/store';
     const { isOpen, onToggle } = useDisclosure();
     const { activityStore, userStore } = useStore();
 
-    console.log(generalStore.token)
+    // console.log(generalStore.token)
   
     return (
       <Box>
