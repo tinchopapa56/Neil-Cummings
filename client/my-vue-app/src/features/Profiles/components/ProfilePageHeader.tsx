@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Flex, Grid, Icon, Heading, Link, Image, Text, Divider, Stack, Button, Avatar} from '@chakra-ui/react';
 import { useStore } from '../../../app/stores/store';
 import { Profile } from '../../../app/models/Interfaces';
@@ -7,12 +7,13 @@ import { object } from 'yup';
 
 interface Props {
   profile: Profile;
+  renderedComponent: string;
 }
 
 function ProfilePageHeader({profile}: Props) {
     const {userStore} = useStore();
     const randomIMG = "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
-  
+
     return (
     <Stack align={"center"} p={4} bg="red.100" direction={"row"} justify="space-between">
             <Stack direction ="row" align={"center"}>

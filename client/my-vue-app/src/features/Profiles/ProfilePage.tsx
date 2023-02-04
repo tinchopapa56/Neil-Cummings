@@ -16,18 +16,6 @@ import ProfilePageContent from "./components/ProfilePageContent";
 
 
 const ProfilePage = () => {
-    // const { username } = useParams<{ username: string }>();
-    // const { profileStore } = useStore();
-    // const { loadingProfile, loadProfile, profile, setActiveTab } = profileStore;
-
-    // useEffect(() => {
-    //     loadProfile(username);
-    //     return () => {
-    //         setActiveTab(0);
-    //     }
-    // }, [loadProfile, username, setActiveTab])
-
-    // if (loadingProfile) return <LoadingComponent content='Loading profile...' />
     const {username} = useParams<{username: string}>();
     const {profileStore} = useStore();
     
@@ -36,7 +24,14 @@ const ProfilePage = () => {
       profileStore.loadProfile(username)
     }
     
-   },[username])
+   },[username, profileStore.loadProfile])
+
+//    useEffect(() => {
+//     loadProfile(username);
+//     return () => {
+//         setActiveTab(0);
+//     }
+// }, [profileStore.loadProfile, username, setActiveTab])
 
    if(profileStore.isloadingProfile == true) {
     return <Spinner size="xl" />

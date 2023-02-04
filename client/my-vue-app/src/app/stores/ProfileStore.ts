@@ -8,6 +8,7 @@ export default class ProfileStore {
     profile: Profile | null = null;
     isloadingProfile: boolean = false;
     uploading: boolean = false;
+    loading:boolean = false;
 
     constructor(){ 
         makeAutoObservable(this)
@@ -71,6 +72,66 @@ export default class ProfileStore {
                 this.profile.image = ph.url
             }
         }
+    }
+    setProfileMainPhoto = async (ph: Photo) => {
+        this.loading = true;
+        try {
+            await API_agent.Profiles.setMainPhoto(ph.id)
+            store.userStore.setImage(ph.url);
+            if(this.profile && this.profile.photos){
+                this.profile.photos.find(pho => pho.isMain)!.isMain = false;
+                this.profile.photos.find(pho => pho.id === ph.id)!.isMain = true;
+    
+                this.profile.image = ph.url;
+                this.loading = false;
+            }
+            toast('🦄 Main Ph changed!', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+        } catch (error) {
+            console.log(error)
+        } finally {
+            this.loading = false;
+        }
+    }
+    // manageMainPhoto = async (PH: Photo) => {
+    //     if(this.profile && this.profile.photos){
+    //         this.profile.photos.find(pho => pho.isMain)!.isMain = false;
+    //         this.profile.photos.find(pho => pho.id === PH.id)!.isMain = true;
+
+    //         this.profile.image = PH.url;
+    //         this.loading = false;
+    //     }
+    // }
+    deletePhoto = async (PH: Photo) => {
+        this.loading = true;
+        try {
+            await API_agent.Profiles.deletePhoto(PH.id);
+            runInAction(() => {
+                if(this.profile){
+                    this.profile.photos = this.profile.photos?.filter(p => p.id !== PH.id )
+                    toast('🦄 Ph deleted!', {
+                        position: "bottom-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "dark",
+                    });
+                }
+            })
+        } catch (error) {
+            console.log(Error)
+        } finally { this.loading = false }
     }
     setIsLoadingProfile = (value: boolean) => this.isloadingProfile = value;
     setUploading = (value: boolean) => this.uploading = value;
