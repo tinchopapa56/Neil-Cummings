@@ -57,3 +57,11 @@ export interface ServerError {
     err: string,
 }
 
+export interface LiveChatComment {
+    id: string,
+    createdAt: Date,
+    body: string,
+    username: string,
+    displayName: string,
+    image: string,
+}
