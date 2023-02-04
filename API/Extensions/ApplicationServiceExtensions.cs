@@ -26,10 +26,29 @@ namespace API.Extensions
             {
                 opt.AddPolicy("CorsPolicy", policy => 
                 {
-                    // policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://127.0.0.1:5173");
-                    policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+                    policy 
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    // .AllowAnyOrigin()
+                    .WithOrigins("http://127.0.0.1:5173");
                 });
             });
+            // services.AddCors(opt =>
+            // {
+            //     opt.AddPolicy("CorsPolicy", builder => 
+            //         builder .AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+            //     );
+
+            //     opt.AddPolicy("signalr",builder => 
+            //     builder
+            //         .AllowAnyMethod()
+            //         .AllowAnyHeader()
+
+            //         .AllowCredentials()
+            //         .SetIsOriginAllowed(hostName => true)
+            //     );
+            // });
             services.AddMediatR(typeof(Lista.Handler));
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             

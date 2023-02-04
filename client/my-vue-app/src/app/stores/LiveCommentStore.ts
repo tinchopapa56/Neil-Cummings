@@ -12,11 +12,12 @@ export default class LiveCommentStore {
     }
 
 
-    createHubConnection = (activityId: string){
+    createHubConnection = (activityId: string) => {
         if(store.activityStore.selectedACT){
             this.hubConnection = new HubConnectionBuilder()
             // .withUrl(process.env.REACT_APP_CHAT_URL + '?activityId=' + activityId, {
-                .withUrl("http://localhost:5000/chat?activityId=" + activityId, {
+            .withUrl("http://localhost:5000/livechat?activityId=" + activityId, {
+                // .withUrl("http://localhost:5000/api/chat?activityId=" + activityId, {
                 accessTokenFactory: () => store.userStore.user?.token!
             })
             .withAutomaticReconnect()
@@ -34,7 +35,7 @@ export default class LiveCommentStore {
             });
         })
 
-        this.hubConnection.on('ReceiveComment', (comment: LiveChatComment) => {
+        this.hubConnection.on('RecibirComment', (comment: LiveChatComment) => {
             runInAction(() => {
                 comment.createdAt = new Date(comment.createdAt);
                 this.comments.unshift(comment)
@@ -55,7 +56,7 @@ clearComments = () => {
 addComment = async (values: any) => {
     values.activityId = store.activityStore.selectedACT?.id;
     try {
-        await this.hubConnection?.invoke('SendComment', values);
+        await this.hubConnection?.invoke('SendComment', values); //IGUAL al metodo en la api "chathub.c#"
     } catch (error) {
         console.log(error);
     }

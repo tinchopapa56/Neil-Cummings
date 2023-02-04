@@ -21,7 +21,7 @@ namespace API.Services
             var comment = await _mediator.Send(command);
 
             await Clients.Group(command.ActivityId.ToString())  //Clients = personas online
-                .SendAsync("ReceiveComment", comment.Value);
+                .SendAsync("RecibirComment", comment.Value);
         }
 
         public override async Task OnConnectedAsync()

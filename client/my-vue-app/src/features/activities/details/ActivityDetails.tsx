@@ -8,6 +8,7 @@ import {UnlockIcon} from "@chakra-ui/icons"
 
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
+import ActivityLiveChat from './ActivityLiveChat';
 
 const ActivityDetails: React.FC= () => {
 
@@ -67,10 +68,12 @@ const ActivityDetails: React.FC= () => {
             </Stack>
           </Stack>
 
-          <Box backgroundColor="white.100">
+          <ActivityLiveChat activityId={activityStore.selectedACT?.id!} />
+          
+          {/* <Box backgroundColor="white.100">
             <Button w="100%" colorScheme={"teal"}>Comment regarding this event</Button>
             <Box>
-              {/* <Text>{activityStore.selectedACT?.comment}</Text> */}
+              <Text>{activityStore.selectedACT?.comment}</Text>
               <Text>aca tengo que agarrar los comments de la ACT</Text>
               {[].map(comment=>(
                 <Box>
@@ -79,7 +82,8 @@ const ActivityDetails: React.FC= () => {
                 </Box>
               ))}
             </Box>
-          </Box>
+          </Box> */}
+
         </Stack>
 
       {/* RIGHT PART */}
