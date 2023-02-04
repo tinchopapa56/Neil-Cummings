@@ -3,7 +3,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { LiveChatComment } from "../models/Interfaces";
 import { store } from "./store";
 
-export default class CommentStore {
+export default class LiveCommentStore {
     comments: LiveChatComment[] = [];
     hubConnection: HubConnection | null = null;
 
