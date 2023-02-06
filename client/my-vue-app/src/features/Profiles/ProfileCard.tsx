@@ -25,7 +25,7 @@ export default observer(function ProfileCard({profile}: Props) {
                 <Box>Username: {profile.displayName}</Box>
                 <Box>Bio: {profile.bio}</Box>
             </Box>
-            <Stack direction ="row" spacing={4}>
+            <Stack align="center" direction ="row" spacing={2}>
                 <ArrowRightIcon />
                 <Text>{profile.followersCount || 6} followers</Text>
             </Stack>

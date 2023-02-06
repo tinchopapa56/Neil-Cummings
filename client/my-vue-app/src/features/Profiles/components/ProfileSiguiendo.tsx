@@ -17,8 +17,6 @@ interface Props{
         profileStore.listFollowings(title); //following o follower
     },[profileStore.listFollowings, profileStore.profile?.followingsCount, profileStore.profile?.followersCount])
 
-    console.log(profileStore.followings.map(dude => dude.displayName))
-
   return (
     <>
               <Stack align="center" p={4} bg="red.100" direction={"row"} divider={<Divider />}>
