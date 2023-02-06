@@ -5,7 +5,7 @@ import { store } from "../stores/store";
 import { toast } from "react-toastify";
 import { Navigate, useNavigate } from "react-router-dom";
 
-axios.defaults.baseURL = "http://localhost:5000/api" //NO SE SI ES ESA URLLLLLLLLLLLLL
+axios.defaults.baseURL = "http://localhost:5001/api" //NO SE SI ES ESA URLLLLLLLLLLLLL
 
 const resBody = <T> (response: AxiosResponse<T>) => response.data;
 
@@ -91,6 +91,10 @@ const Profiles = {
     },
     setMainPhoto: (id:string) => requests.post(`/photos/${id}/setMain`, {}),
     deletePhoto: (id:string) => requests.del(`/photos/${id}`),
+    // updateProfile: (profile: Partial<Profile>) => requests.put(`/profiles`, profile),
+    updateFollowing: (username:string) => requests.post(`/follow/${username}`, {}),
+    listSeguidores: (username: string, predicate: string) => requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
+    // listActivities: (username: string, predicate: string) => requests.get<UserActivity[]>(`/profiles/${username}/activities?predicate=${predicate}`)
 }
 const API_agent = {
     Activities,

@@ -97,12 +97,6 @@ export default class UserStore {
             return false;
         }
     }
-    setLoading = (val: boolean) =>{
-        this.loading = val;
-    }
-    setCurrentUser = (user: User) => {
-        this.user = user;
-    }
     getUser = async()=>{
         try{
             const currentU = await API_agent.Account.current();
@@ -111,6 +105,15 @@ export default class UserStore {
             console.log(error);
         }
     }
+
+    //GETTERS // SETTERs
+    setLoading = (val: boolean) =>{
+        this.loading = val;
+    }
+    setCurrentUser = (user: User) => {
+        this.user = user;
+    }
+    
     setImage = (image: string) => {
         if(this.user) this.user.image = image;
     }

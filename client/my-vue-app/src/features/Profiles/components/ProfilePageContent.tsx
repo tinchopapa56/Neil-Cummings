@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
-import { Box, Flex, Grid, Icon, Heading, Link, Image, Text, Divider, Stack, Button, Avatar} from '@chakra-ui/react';
+import { Box, Flex, Heading, Text, Divider, Stack, Button, Avatar} from '@chakra-ui/react';
 // import ProfileCard from "../../Profiles/ProfileCard";
 import { useState } from "react";
 import {CheckCircleIcon} from "@chakra-ui/icons"
 import { Profile } from '../../../app/models/Interfaces';
 import { observer } from 'mobx-react-lite';
 import ProfilePhotos from './ProfilePhotos';
+import ProfileSiguiendo from './ProfileSiguiendo';
 
 interface Props {
     profile: Profile;
@@ -13,7 +14,7 @@ interface Props {
 function ProfilePageContent({profile}: Props) {
 
   const[renderedComponent, setRenderedComponent] = useState<any>({
-      About : false,
+      About : true,
       Photos : false,
       Events : false,
       Followers : false,
@@ -38,12 +39,23 @@ function ProfilePageContent({profile}: Props) {
   return (
     <Stack direction="row" spacing={4}>
       {/* Selected section */}
-      <Box flex="0.7">
-        {/* <Stack align="center" p={4} bg="red.100" direction={"row"} justify="space-between" divider={<Divider />}>
-          <CheckCircleIcon boxSize={8} color="green.300" />
-          <Button> Add photo </Button>
-        </Stack> */}
+      <Box flex="1">
         <Box bg="teal.100">
+          
+          {/* ABOUT */}
+          {renderedComponent.About && 
+            <>
+              <Stack align="center" p={4} bg="red.100" direction={"row"} divider={<Divider />}>
+                  <Heading>About</Heading>
+                  <CheckCircleIcon boxSize={8} color="green.300" />
+              </Stack>
+              <Box>
+                {profile?.bio || "Not much to say about me, i´m new here!"}
+              </Box>
+            </>
+          }
+          {renderedComponent.Following && <ProfileSiguiendo title="following" /> }
+          {renderedComponent.Followers && <ProfileSiguiendo title="followers" /> }
           {renderedComponent.Photos && <ProfilePhotos photos={profile.photos!} /> }
           {/* {renderedComponent.Events && <ProfileEvents events={profile.events!} /> } */}
           {/* {renderedComponent.Followers && <ProfileFollowers followers={profile.followers!}*/}
@@ -52,7 +64,7 @@ function ProfilePageContent({profile}: Props) {
       </Box>
 
       {/* {Selector} */}
-      <Stack spacing={1} flex="0.3">
+      <Stack spacing={1} w={210}>
         {["About", "Photos", "Events", "Followers", "Following"].map( (section,i) => (
           <Box onClick={() => handleRenderedComponent(section)}
            key={i} p={2} bg="red.100" _hover={{ bg:"red.300" }}>

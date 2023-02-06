@@ -73,6 +73,11 @@ const ActivityList: React.FC<Props> = ({activities}) => {
       activityStore.selectACT(id);
     }
   }
+  console.log(activities?.forEach(act => {
+    console.log(act)
+    console.log(act.isHost);
+    console.log(act.isHost);
+  }))
 
   return (
     <Container maxW={'7xl'} p="6" w={"100%"}>

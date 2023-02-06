@@ -9,6 +9,8 @@ export default class ProfileStore {
     isloadingProfile: boolean = false;
     uploading: boolean = false;
     loading:boolean = false;
+    followings: Profile[] = [];
+    isLoadingSeguidores: boolean = false;
 
     constructor(){ 
         makeAutoObservable(this)
@@ -16,7 +18,7 @@ export default class ProfileStore {
 
     get isCurrentUser() {
         if(store.userStore.user && this.profile){
-            return store.userStore.user.userName === this.profile.username;
+            return store.userStore.user.username === this.profile.username;
         }
         return false;
     }
@@ -63,7 +65,7 @@ export default class ProfileStore {
             });
         } finally { this.setUploading(false); }
     }
-    setProfile = (perfil : Profile) => this.profile = perfil;
+   
     setProfileNewPhoto = (ph : Photo) => {
         if(this.profile) {
             this.profile.photos?.push(ph);
@@ -101,15 +103,6 @@ export default class ProfileStore {
             this.loading = false;
         }
     }
-    // manageMainPhoto = async (PH: Photo) => {
-    //     if(this.profile && this.profile.photos){
-    //         this.profile.photos.find(pho => pho.isMain)!.isMain = false;
-    //         this.profile.photos.find(pho => pho.id === PH.id)!.isMain = true;
-
-    //         this.profile.image = PH.url;
-    //         this.loading = false;
-    //     }
-    // }
     deletePhoto = async (PH: Photo) => {
         this.loading = true;
         try {
@@ -133,6 +126,37 @@ export default class ProfileStore {
             console.log(Error)
         } finally { this.loading = false }
     }
+    updateFollowing = async (username: string, following: boolean) =>{
+        this.loading = true;
+        try{
+            await API_agent.Profiles.updateFollowing(username);
+            store.activityStore.updateAttendeeFollowing(username);
+            runInAction(() => {
+                if(this.profile && this.profile.username !== store.userStore.user?.username){
+                    following ? this.profile.followersCount!++ : this.profile.followersCount!--;
+                    this.profile.following = !this.profile.following
+                }
+                this.followings.forEach(profile => {
+                    if (profile.username === username) {
+                        profile.following ? profile.followersCount!-- : profile.followersCount!++;
+                        profile.following = !profile.following;
+                    }
+                })
+            })
+        } catch(err){console.log(err)
+        } finally { this.loading = false; }
+    }
+    listFollowings = async (predicate: string) => {
+        this.isLoadingSeguidores = true;
+        try {
+            const followings = await API_agent.Profiles.listSeguidores(this.profile?.username!, predicate); 
+            runInAction(() => {
+                this.followings = followings;
+            })
+        } catch (error) {console.log(error)
+        } finally { this.isLoadingSeguidores = false; }
+    }
     setIsLoadingProfile = (value: boolean) => this.isloadingProfile = value;
     setUploading = (value: boolean) => this.uploading = value;
+    setProfile = (perfil : Profile) => this.profile = perfil;
 }

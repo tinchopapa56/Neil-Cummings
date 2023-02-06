@@ -69,20 +69,6 @@ const ActivityDetails: React.FC= () => {
           </Stack>
 
           <ActivityLiveChat activityId={activityStore.selectedACT?.id!} />
-          
-          {/* <Box backgroundColor="white.100">
-            <Button w="100%" colorScheme={"teal"}>Comment regarding this event</Button>
-            <Box>
-              <Text>{activityStore.selectedACT?.comment}</Text>
-              <Text>aca tengo que agarrar los comments de la ACT</Text>
-              {[].map(comment=>(
-                <Box>
-                  <Avatar src="" />
-                  <Text>username</Text>
-                </Box>
-              ))}
-            </Box>
-          </Box> */}
 
         </Stack>
 
@@ -96,8 +82,10 @@ const ActivityDetails: React.FC= () => {
             <Flex p={2} gap={4} key={att.username}>
               <Avatar src={att.image || ""} size="md" />
               <Box>
-                <Text>{att.username}</Text>
+                <Text fontSize={"lg"} fontWeight="semibold">{att.username}</Text>
+                {att.following && (
                 <Text color="orange">Following</Text>
+                )}
               </Box>
             </Flex>
           ))}

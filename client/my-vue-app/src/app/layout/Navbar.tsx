@@ -1,5 +1,5 @@
-import { Box, Flex, Text, IconButton, Button, Stack, Collapse, Icon, Link, Popover, PopoverTrigger, PopoverContent, useColorModeValue, useBreakpointValue, useDisclosure} from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon, ChevronDownIcon, ChevronRightIcon, UnlockIcon} from "@chakra-ui/icons";
+import { Box, Flex, Text, IconButton, Button, Stack, Collapse, Icon, Link, Popover, PopoverTrigger, PopoverContent, useColorModeValue, useBreakpointValue, useDisclosure, Avatar} from '@chakra-ui/react';
+import { HamburgerIcon, CloseIcon, ChevronDownIcon, ArrowDownIcon, ChevronRightIcon, UnlockIcon} from "@chakra-ui/icons";
 import { useStore } from '../stores/store';
 
   export default function WithSubnavigation() {
@@ -8,6 +8,9 @@ import { useStore } from '../stores/store';
     const { activityStore, userStore } = useStore();
 
     // console.log(generalStore.token)
+    
+    // { user, logout, isLoggedIn }
+    console.log(userStore.user)
   
     return (
       <Box>
@@ -39,12 +42,29 @@ import { useStore } from '../stores/store';
               <DesktopNav />
             </Flex>
           </Flex>
+                        
   
           <Stack align={"center"} flex={{ base: 1, md: 0 }} justify={'flex-end'} direction={'row'} spacing={6}>
             {generalStore.token ? (
-              <Button onClick={()=> userStore.logout()} display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} color={'white'} bg={'teal.300'} _hover={{bg: 'teal.400',}}>
-                Log out
-              </Button>
+              
+                <Popover trigger={'hover'} placement={'bottom-start'}>
+        
+                  <PopoverTrigger>
+                    <Stack direction={"row"} align="center">
+                      <Avatar src={userStore.user?.image} />
+                      <ArrowDownIcon boxSize={6} color="whiteAlpha.700" />
+                    </Stack>
+                  </PopoverTrigger>
+                  <PopoverContent w={200} border={0} boxShadow={'xl'} p={4} rounded={'xl'}>
+                      <Stack>
+                        <Text as={Link} href={`/profiles/${userStore.user?.username}`}>Go to Profile</Text>
+                        <Button onClick={()=> userStore.logout()} display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} color={'white'} bg={'teal.300'} _hover={{bg: 'teal.400',}}>
+                          Logout
+                        </Button>
+                      </Stack>
+                    </PopoverContent>
+                </Popover>
+              
               ):(
               <>
                 <Link href={"/login"} p={".5em 0"} fontSize={'xl'}  _hover={{   textDecoration: 'none'}}>

@@ -16,8 +16,8 @@ export default class LiveCommentStore {
         if(store.activityStore.selectedACT){
             this.hubConnection = new HubConnectionBuilder()
             // .withUrl(process.env.REACT_APP_CHAT_URL + '?activityId=' + activityId, {
-            .withUrl("http://localhost:5000/livechat?activityId=" + activityId, {
-                // .withUrl("http://localhost:5000/api/chat?activityId=" + activityId, {
+            .withUrl("http://localhost:5001/livechat?activityId=" + activityId, {
+                // .withUrl("http://localhost:5001/api/chat?activityId=" + activityId, {
                 accessTokenFactory: () => store.userStore.user?.token!
             })
             .withAutomaticReconnect()

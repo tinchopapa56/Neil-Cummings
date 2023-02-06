@@ -26,6 +26,7 @@ export interface Profile {
     photos?: Photo[],
     followersCount?: number,
     followingsCount?: number,
+    following?: boolean,
 }
 export interface Photo {
     id: string,
@@ -34,7 +35,7 @@ export interface Photo {
 }
 export class Profile implements Profile{
     constructor(user: User){
-        this.username = user.userName;
+        this.username = user.username;
         this.displayName = user.displayName;
         this.image = user.image;
     }
@@ -48,7 +49,7 @@ export interface FormValues {
 }
 
 export interface User {
-    userName: string,       //userNNNName xq asi es la propr del ASP.net User = userName[mayuscula]
+    username: string,       //userNNNName xq asi es la propr del ASP.net User = userName[mayuscula]
     displayName: string,
     token: string,
     image?: string,

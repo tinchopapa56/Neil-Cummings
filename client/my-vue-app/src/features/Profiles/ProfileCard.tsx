@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Box, Image,Text, Stack, Icon} from "@chakra-ui/react"
 import {ArrowRightIcon} from "@chakra-ui/icons"
 import { Profile } from '../../app/models/Interfaces';
+import FollowButton from './components/FollowButton';
 // import FollowButton from './FollowButton';
 
 interface Props {
@@ -18,7 +19,7 @@ export default observer(function ProfileCard({profile}: Props) {
     }
 
     return (
-        <Box as={Link} to={`/profiles/${profile.username}`}>
+        <Box>
             <Image w={10} src={profile.image || 'https://bit.ly/dan-abramov'} />
             <Box>
                 <Box>Username: {profile.displayName}</Box>
@@ -28,7 +29,7 @@ export default observer(function ProfileCard({profile}: Props) {
                 <ArrowRightIcon />
                 <Text>{profile.followersCount || 6} followers</Text>
             </Stack>
-            {/* <FollowButton profile={profile} /> */}
+            <FollowButton perfil={profile} />
         </Box>
     )
 })

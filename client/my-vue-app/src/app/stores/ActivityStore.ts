@@ -55,8 +55,8 @@ export default class ActivityStore {
     setActivity = (act: Activity) => {
         const user = store.userStore.user;
         if(user){
-            act.isGoing = act.attendees!.some(a => a.username === user.userName)
-            act.isHost = act.hostUsername === user.userName;
+            act.isGoing = act.attendees!.some(a => a.username === user.username)
+            act.isHost = act.hostUsername === user.username;
             act.host = act.attendees?.find(dude => dude.username === act.hostUsername)
         }
 
@@ -89,7 +89,7 @@ export default class ActivityStore {
         const user = store.userStore.user;
         const attendee = new Profile(user!);
         activityToCreate.attendees.push(attendee);
-        activityToCreate.hostUsername = user!.userName;
+        activityToCreate.hostUsername = user!.username;
         activityToCreate.id = uuidv4();
         // this.setActivity(activityToCreate); PARA PONER LAS PROPS EXTRAS
         try{
@@ -188,7 +188,7 @@ export default class ActivityStore {
             await API_agent.Activities.attend(this.selectedACT!.id)
             runInAction(() => {
                 if(this.selectedACT?.isGoing) {
-                    this.selectedACT.attendees = this.selectedACT.attendees.filter(attendee => attendee.username !== user?.userName);
+                    this.selectedACT.attendees = this.selectedACT.attendees.filter(attendee => attendee.username !== user?.username);
                     this.selectedACT.isGoing = false;
                     toast('🦄 You abandoned the activity', {
                         position: "bottom-right",
@@ -232,5 +232,14 @@ export default class ActivityStore {
             runInAction(() => this.loading = false);
         }
     }
-
+    updateAttendeeFollowing = (username: string) => {
+        this.activities.forEach(act => {
+            act.attendees.forEach(attende => {
+                if(attende.username === username){
+                    attende.following ? attende.followersCount!-- : attende.followersCount!++;
+                    attende.following = !attende.following;
+                }
+            })
+        })
+    }
 }

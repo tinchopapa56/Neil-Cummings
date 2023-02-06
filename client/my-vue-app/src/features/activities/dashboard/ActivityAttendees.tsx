@@ -16,9 +16,12 @@ const ActivityAttendees: React.FC<Props> = ({act}) =>{
     return(
         <>
             {act.attendees.map(attendee => (
-                <Popover>
+                <Popover trigger={'hover'} key={attendee.username}>
                 <PopoverTrigger>
-                    <Avatar cursor={"pointer"} size='sm' _hover={{   transform: "scale(1.2)", }}
+                    <Avatar 
+                        as={Link} href={`/profiles/${attendee.username}`}
+                        cursor={"pointer"} size='sm' _hover={{   transform: "scale(1.2)", }}
+                        border={attendee.following ? "2px orange solid" :""}
                         name= { attendee.username ? `${attendee.username}` : 'TemplateName'} 
                         src={ attendee.image ? `${attendee.image}` : 'https://bit.ly/dan-abramov'} 
                     />
