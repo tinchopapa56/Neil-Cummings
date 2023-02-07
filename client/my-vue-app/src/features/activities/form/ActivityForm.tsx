@@ -1,10 +1,9 @@
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
-import { useParams } from 'react-router-dom';
 import { Activity } from '../../../app/models/Interfaces';
 
 import React, { useState } from 'react'
-import { Input, FormControl, Flex, Button,Link,Stack,Box, Card,Spinner, Heading, Text,} from '@chakra-ui/react';
+import { Input, Button,Stack,Box, Text,} from '@chakra-ui/react';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { Navigate, useNavigate } from 'react-router-dom'

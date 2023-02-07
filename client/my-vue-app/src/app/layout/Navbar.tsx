@@ -10,7 +10,7 @@ import { useStore } from '../stores/store';
     // console.log(generalStore.token)
     
     // { user, logout, isLoggedIn }
-    console.log(userStore.user)
+    // console.log(userStore.user)
   
     return (
       <Box>

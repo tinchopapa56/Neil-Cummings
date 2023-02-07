@@ -1,9 +1,10 @@
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosResponseHeaders } from "axios";
 import axios from "axios";
 import { Activity, User, FormValues, Profile, Photo } from "../models/Interfaces";
 import { store } from "../stores/store";
 import { toast } from "react-toastify";
 import { Navigate, useNavigate } from "react-router-dom";
+import { PaginatedResult } from "../models/pagination";
 
 axios.defaults.baseURL = "http://localhost:5001/api" //NO SE SI ES ESA URLLLLLLLLLLLLL
 
@@ -16,48 +17,59 @@ axios.interceptors.request.use(config => {
 })
 
 
-// axios.interceptors.response.use(async response => {
-//     // const pagination = response.headers['pagination'];
-//     // if (pagination) {
-//     //     response.data = new PaginatedResult(response.data, JSON.parse(pagination));
-//     //     return response as AxiosResponse<PaginatedResult<any>>
-//     // }
-//     return response;
-// }, (error: AxiosError) => {
-//     const { data, status, config, headers } = error.response!;
-//     switch (status) {
-//         case 400:
-//             if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
-//                 Navigate("/not-found");
-//             }
-//             if (data.errors) {
-//                 const modalStateErrors = [];
-//                 for (const key in data.errors) {
-//                     if (data.errors[key]) {
-//                         modalStateErrors.push(data.errors[key])
-//                     }
-//                 }
-//                 throw modalStateErrors.flat();
-//             } else {
-//                 toast.error(data);
-//             }
-//             break;
-//         case 401:
-//             if (status === 401 && headers['www-authenticate']?.startsWith('Bearer error="invalid_token"')) {
-//                 store.userStore.logout();
-//                 toast.error('Session expired - please login again');
-//             }
-//             break;
-//         case 404:
-//             navigate("/not-found");
-//             break;
-//         case 500:
-//             store.generalStore.setServerError(data);
-//             navigate("/server-error");
-//             break;
-//     }
-//     return Promise.reject(error);
-// })
+axios.interceptors.response.use(async response => {
+    const pagination = response.headers['pagination'];
+    if (pagination) {
+        response.data = new PaginatedResult(response.data, JSON.parse(pagination));
+        return response as AxiosResponse<PaginatedResult<any>>
+    }
+    return response;
+}, (error: AxiosError) => {
+    // interface errRES {
+    //     data: any;
+    //     status: number;
+    //     config: AxiosRequestConfig<any>,
+    //     headers: AxiosResponseHeaders | Partial<Record<string, string>>,
+    // }
+    let { data, status, config, headers } = error.response!;
+
+    let data2:any = data;
+
+    const navigate = useNavigate();
+
+    switch (status) {
+        case 400:
+            if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
+                navigate("/not-found");
+            }
+            if (data.errors) {
+                const modalStateErrors = [];
+                for (const key in data.errors) {
+                    if (data.errors[key]) {
+                        modalStateErrors.push(data.errors[key])
+                    }
+                }
+                throw modalStateErrors.flat();
+            } else {
+                toast.error(data);
+            }
+            break;
+        case 401:
+            if (status === 401 && headers['www-authenticate']?.startsWith('Bearer error="invalid_token"')) {
+                store.userStore.logout();
+                toast.error('Session expired - please login again');
+            }
+            break;
+        case 404:
+            navigate("/not-found");
+            break;
+        case 500:
+            store.generalStore.setServerError(data);
+            navigate("/server-error");
+            break;
+    }
+    return Promise.reject(error);
+})
 
 const requests = {
     get: <T> (url:string) => axios.get<T>(url).then(resBody),
@@ -66,7 +78,9 @@ const requests = {
     del: <T> (url:string) => axios.delete<T>(url).then(resBody),
 }
 const Activities = {
-    list: () => requests.get<Activity[]>("/activities"),
+    // list: () => requests.get<Activity[]>("/activities"),
+    list: (PAGINGparams: URLSearchParams) => axios.get<PaginatedResult<Activity[]>>("/activities", {params: PAGINGparams})
+        .then(resBody),
     actDetails: (id: string) => requests.get<Activity>(`/activities/${id}`),
     create: (activityToCreate: Activity) => requests.post<void>("/activities", activityToCreate),
     edit: (activityToEdit: Activity) => requests.put<void>("activities", activityToEdit),
