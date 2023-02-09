@@ -5,8 +5,9 @@ import { useState } from "react";
 import {CheckCircleIcon} from "@chakra-ui/icons"
 import { Profile } from '../../../app/models/Interfaces';
 import { observer } from 'mobx-react-lite';
-import ProfilePhotos from './ProfilePhotos';
-import ProfileSiguiendo from './ProfileSiguiendo';
+import ProfilePhotos from './profilePageContent/ProfilePhotos';
+import ProfileSiguiendo from './profilePageContent/ProfileSiguiendo';
+import ProfileEvents from './profilePageContent/ProfileEvents';
 
 interface Props {
     profile: Profile;
@@ -57,8 +58,7 @@ function ProfilePageContent({profile}: Props) {
           {renderedComponent.Following && <ProfileSiguiendo title="following" /> }
           {renderedComponent.Followers && <ProfileSiguiendo title="followers" /> }
           {renderedComponent.Photos && <ProfilePhotos photos={profile.photos!} /> }
-          {/* {renderedComponent.Events && <ProfileEvents events={profile.events!} /> } */}
-          {/* {renderedComponent.Followers && <ProfileFollowers followers={profile.followers!}*/}
+          {renderedComponent.Events && <ProfileEvents events={profile.events!} /> }
           
         </Box>
       </Box>

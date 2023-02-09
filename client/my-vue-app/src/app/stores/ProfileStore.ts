@@ -1,7 +1,7 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx"
 import { toast } from "react-toastify";
 import API_agent from "../api/agent";
-import { Photo, Profile, ServerError } from "../models/Interfaces";
+import { Photo, Profile, ServerError, UserEvent } from "../models/Interfaces";
 import { store } from "./store";
 
 export default class ProfileStore {
@@ -11,6 +11,8 @@ export default class ProfileStore {
     loading:boolean = false;
     followings: Profile[] = [];
     isLoadingSeguidores: boolean = false;
+    userEvents: UserEvent[] = []
+    isLoadingEvents: boolean = false;
 
     constructor(){ 
         makeAutoObservable(this)
@@ -159,4 +161,19 @@ export default class ProfileStore {
     setIsLoadingProfile = (value: boolean) => this.isloadingProfile = value;
     setUploading = (value: boolean) => this.uploading = value;
     setProfile = (perfil : Profile) => this.profile = perfil;
+
+    loadProfileEvents = async (username: string, predicate: string) => {
+        this.setIsLoadingEvents(true)
+        try {
+            const events = await API_agent.Profiles.listEvents(username, predicate);
+            console.log("desde profile store: ", events)
+            runInAction(() => {
+                this.userEvents = events
+            })
+        } catch (error) {console.log(error);}
+        finally{ this.setIsLoadingEvents(false)}
+    }
+    setIsLoadingEvents = (value: boolean) =>{
+        this.isLoadingEvents= value;
+    } 
 }

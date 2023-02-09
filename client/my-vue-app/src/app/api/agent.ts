@@ -1,6 +1,6 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosResponseHeaders } from "axios";
 import axios from "axios";
-import { Activity, User, FormValues, Profile, Photo } from "../models/Interfaces";
+import { Activity, User, FormValues, Profile, Photo, UserEvent } from "../models/Interfaces";
 import { store } from "../stores/store";
 import { toast } from "react-toastify";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -108,7 +108,7 @@ const Profiles = {
     // updateProfile: (profile: Partial<Profile>) => requests.put(`/profiles`, profile),
     updateFollowing: (username:string) => requests.post(`/follow/${username}`, {}),
     listSeguidores: (username: string, predicate: string) => requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
-    // listActivities: (username: string, predicate: string) => requests.get<UserActivity[]>(`/profiles/${username}/activities?predicate=${predicate}`)
+    listEvents: (username: string, predicate: string) => requests.get<UserEvent[]>(`/profiles/${username}/events?predicate=${predicate}`)
 }
 const API_agent = {
     Activities,

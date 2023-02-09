@@ -17,6 +17,8 @@ const ProfilePage = () => {
    useEffect(() => {
     if(username){
       profileStore.loadProfile(username)
+      const ver = profileStore.loadProfileEvents(username, "default")
+      console.log(ver)
     }
     
    },[username, profileStore.loadProfile])

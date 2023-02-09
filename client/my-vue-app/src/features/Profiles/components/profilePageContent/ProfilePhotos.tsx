@@ -1,11 +1,11 @@
 import React, { SyntheticEvent, useState } from 'react'
 import { Box, Flex, Grid, Icon, Heading, GridItem, Link, Image, Text, Divider, Stack, Button, Avatar} from '@chakra-ui/react';
-import { useStore } from '../../../app/stores/store';
-import { Photo, Profile } from '../../../app/models/Interfaces';
+import { useStore } from '../../../../app/stores/store';
+import { Photo, Profile } from '../../../../app/models/Interfaces';
 import { observer } from 'mobx-react-lite';
 import { object } from 'yup';
 import {CheckCircleIcon} from "@chakra-ui/icons"
-import ImageUpload from './ImageUpload/ImageUpload';
+import ImageUpload from '../ImageUpload/ImageUpload';
 
 interface Props {
     photos: Photo[]

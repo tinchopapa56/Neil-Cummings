@@ -3,7 +3,7 @@ import { string } from "yup"
 export interface Activity {
     id: string,
     title: string,
-    date: string,
+    date: string, //por ahi es date
     description: string,
     category: string,
     city: string,
@@ -18,28 +18,7 @@ export interface Activity {
 
     attendees: Profile[],
 }
-export interface Profile {
-    username: string,
-    displayName: string,
-    image?: string,
-    bio?: string,
-    photos?: Photo[],
-    followersCount?: number,
-    followingsCount?: number,
-    following?: boolean,
-}
-export interface Photo {
-    id: string,
-    url: string,
-    isMain: boolean,
-}
-export class Profile implements Profile{
-    constructor(user: User){
-        this.username = user.username;
-        this.displayName = user.displayName;
-        this.image = user.image;
-    }
-}
+
 
 export interface FormValues {
     email: string,
@@ -65,4 +44,37 @@ export interface LiveChatComment {
     username: string,
     displayName: string,
     image: string,
+}
+
+
+    //PROFILE
+export interface Profile {
+    username: string,
+    displayName: string,
+    image?: string,
+    bio?: string,
+    photos?: Photo[],
+    followersCount?: number,
+    followingsCount?: number,
+    following?: boolean,
+    events: Activity[],
+}
+export interface Photo {
+    id: string,
+    url: string,
+    isMain: boolean,
+}
+export class Profile implements Profile{
+    constructor(user: User){
+        this.username = user.username;
+        this.displayName = user.displayName;
+        this.image = user.image;
+    }
+}
+export interface UserEvent {
+    id: string,
+    title: string,
+    category: string,
+    date: Date,
+    date2: string,
 }

@@ -3,8 +3,8 @@ import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
 import { Box, Image, Heading, Button, Stack, Text, Icon, Divider, Grid, GridItem} from "@chakra-ui/react"
 import {ArrowRightIcon} from "@chakra-ui/icons"
-import { useStore } from '../../../app/stores/store';
-import ProfileCard from '../ProfileCard';
+import { useStore } from '../../../../app/stores/store';
+import ProfileCard from '../../ProfileCard';
 
 interface Props{
     title: string
