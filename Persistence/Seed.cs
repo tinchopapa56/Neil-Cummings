@@ -30,6 +30,24 @@ namespace Persistence
                         UserName = "tom",
                         Email = "tom@test.com"
                     },
+                    new AppUser
+                    {
+                        DisplayName = "Bob2",
+                        UserName = "bob2",
+                        Email = "bob2@test.com"
+                    },
+                    new AppUser
+                    {
+                        DisplayName = "Bob3",
+                        UserName = "bob3",
+                        Email = "bob3@test.com"
+                    },
+                    new AppUser
+                    {
+                        DisplayName = "Bob4",
+                        UserName = "bob4",
+                        Email = "bob4@test.com"
+                    },
                 };
 
                 foreach (var user in users)

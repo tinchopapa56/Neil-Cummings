@@ -19,7 +19,8 @@ namespace API.Extensions
             services.AddSwaggerGen();
             services.AddDbContext<DataContext>(opts=>
             {
-                opts.UseSqlite(config.GetConnectionString("DefaultConnection"));
+                // opts.UseSqlite(config.GetConnectionString("DefaultConnection"));
+                opts.UseNpgsql (config.GetConnectionString("DefaultConnection"));
             });
 
             services.AddCors(opt => 

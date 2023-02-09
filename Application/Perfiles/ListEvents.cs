@@ -37,9 +37,9 @@ namespace Application.Perfiles
 
                 query = req.Predicate switch
                 {
-                    "past" => query.Where(a => a.Date <= DateTime.Now),
+                    "past" => query.Where(a => a.Date <= DateTime.UtcNow),
                     "hosting" => query.Where(a => a.HostUsername == req.Username),
-                    _ => query.Where(a => a.Date >= DateTime.Now),
+                    _ => query.Where(a => a.Date >= DateTime.UtcNow),
                 };
 
                 var events = await query.ToListAsync();

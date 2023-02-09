@@ -6,7 +6,7 @@ using Application.Perfils;
 using Microsoft.AspNetCore.Mvc;
 // using Application.Activities;
 using Application.Perfiles;
-using Microsoft.AspNetCore.Mvc;
+// using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {

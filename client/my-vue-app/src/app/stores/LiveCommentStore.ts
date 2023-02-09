@@ -29,7 +29,8 @@ export default class LiveCommentStore {
         this.hubConnection.on('LoadLIVEComments', (comments: LiveChatComment[]) => {
             runInAction(() => {
                 comments.forEach(comment => {
-                    comment.createdAt = new Date(comment.createdAt + 'Z');
+                    // comment.createdAt = new Date(comment.createdAt + 'Z');
+                    comment.createdAt = new Date(comment.createdAt);
                 })
                 this.comments = comments
             });
