@@ -63,11 +63,21 @@ namespace API.Extensions
                     policy 
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .AllowCredentials()
-                    // .AllowAnyOrigin()
-                    .WithOrigins("http://127.0.0.1:5173");
+                    // .AllowCredentials()
+                    .AllowAnyOrigin();
+                    // .WithOrigins("http://127.0.0.1:5173");
+
+                 //NEIL code
+                    // .AllowAnyMethod()
+                    //     .AllowAnyHeader()
+                    //     .AllowCredentials()
+                    //     .WithExposedHeaders("WWW-Authenticate", "Pagination")
+                    //     .WithOrigins("http://localhost:5173");
                 });
             });
+
+
+
             // services.AddCors(opt =>
             // {
             //     opt.AddPolicy("CorsPolicy", builder => 

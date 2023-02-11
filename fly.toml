@@ -1,18 +1,14 @@
-# fly.toml file generated for neil on 2023-02-09T15:31:46-03:00
+# fly.toml file generated for ultimo on 2023-02-10T14:42:42-03:00
 
-app = "neil"
+app = "ultimo"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
 [build]
-  image = "tinchopapa55/reactivities3"
+  image = "tinchopapa55/ultimo"
 
 [env]
-  ASPNETCORE_URLS="http//+:8080"
-  Cloudinary__CloudName="dhyncji0d"
-  Cloudinary__ApiKey="K8SFeXnwGhn3du2W9NTaehHuRqw"
-
 
 [experimental]
   auto_rollback = true
