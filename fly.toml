@@ -1,14 +1,16 @@
-# fly.toml file generated for ultimo on 2023-02-10T14:42:42-03:00
+# fly.toml file generated for bandify on 2023-02-11T17:27:21-03:00
 
-app = "ultimo"
+app = "bandify"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
 [build]
-  image = "tinchopapa55/ultimo"
+  image = "tinchopapa55/bandify:latest"
 
 [env]
+  Cloudinary_CloudName = "dhyncji0d"
+  Cloudinary_ApiKey=475275729222213
 
 [experimental]
   auto_rollback = true
