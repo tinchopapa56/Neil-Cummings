@@ -32,7 +32,7 @@ namespace API.Extensions
             string connStr;
 
             // Depending if dev cvs production use either FlyIO vs development connection string from env var.
-            if (env == "Development") { connStr = config.GetConnectionString("DefaultConnection");
+            if (env == "Development") { connStr = config.GetConnectionString("toDB");
             }
             else
             {
