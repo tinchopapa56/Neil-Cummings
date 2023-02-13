@@ -12,8 +12,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230210154014_nueva")]
-    partial class nueva
+    [Migration("20230213165747_bandify_edgy")]
+    partial class bandifyedgy
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
