@@ -8,6 +8,9 @@ using Domain;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using API.Services;
 
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.EnvironmentVariables;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers(opt =>  //every endpoint REQUIRES AUTH
@@ -15,6 +18,8 @@ builder.Services.AddControllers(opt =>  //every endpoint REQUIRES AUTH
     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
     opt.Filters.Add(new AuthorizeFilter(policy));
 });
+//NUEVO A VER SI RESUELVO LO DEL NULL
+// builder.Services.AddEnvironmentVariables(); //this the method you suggested
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration); 
 

@@ -6,9 +6,13 @@ kill_timeout = 5
 processes = []
 
 [build]
-  image = "tinchopapa55/repito:latest"
+  image = "tinchopapa55/repito_nuevo:latest"
 
 [env]
+  ASPNETCORE_URLS="http://+:8080"
+  Cloudinary__CloudName="dj3wmuy3l"
+  Cloudinary__ApiKey="895484589483755"
+
 
 [experimental]
   auto_rollback = true
