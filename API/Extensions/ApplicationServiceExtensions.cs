@@ -48,7 +48,7 @@ namespace API.Extensions
             
         });
 
-        //FLY io
+        //intento ambos FLY io
         // services.AddDbContext<DataContext>(options =>
         // {
         //     var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
