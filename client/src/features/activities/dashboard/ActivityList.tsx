@@ -1,4 +1,4 @@
-import { Heading,  Divider, WrapItem,  Container, Skeleton,} from '@chakra-ui/react';
+import { Heading,  Divider, Box, WrapItem,  Container, Skeleton,} from '@chakra-ui/react';
 import { useEffect } from 'react';
 
 import { useStore } from '../../../app/stores/store';
@@ -11,11 +11,14 @@ const ActivityList: React.FC = () => {
   
 
   return (
-    <Container maxW={'7xl'} p="6" w={"100%"}>
-      <Heading as="h1">All Activities</Heading>
+    <Container maxW={'8xl'} p="6" w={"100%"}>
+    <Box>
+
+    
+      {/* <Heading as="h1">All Activities</Heading> */}
       <Divider marginTop="5" />
     {/* <WrapItem width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}> */}
-        <WrapItem flexWrap="wrap" maxW={800} width={"100%"} gap="15px">
+        <WrapItem justifyContent={"center"} flexWrap="wrap" maxW={1200} width={"100%"} gap="30px">
 
           {activityStore.loadingInitial ? (
             <>
@@ -34,8 +37,8 @@ const ActivityList: React.FC = () => {
           )}
           
         </WrapItem>
-
-    </Container>
+        </Box>
+     </Container>
   );
 };
 

@@ -8,10 +8,12 @@ import {RouterProvider} from "react-router-dom"
 import { router } from './app/router/Routes'
 import { store, StoreContext } from './app/stores/store'
 
+import { theme } from './theme'
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   // <React.StrictMode>
     <StoreContext.Provider value={store}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <RouterProvider router={router} /> 
       </ChakraProvider>
     </StoreContext.Provider>

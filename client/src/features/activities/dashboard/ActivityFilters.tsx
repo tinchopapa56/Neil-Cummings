@@ -15,28 +15,34 @@ import { useStore } from '../../../app/stores/store'
   
   return (
     <Stack>
-        <Heading mt={6} as="h2">Filter by</Heading>
+        <Heading textAlign={"center"} mt={6} as="h2">Our shows</Heading>
         <Text>Date</Text>
         <Input name="date"  type="date"
           onChange={(e) => activityStore.setPredicate('startdDate', e.target.value)} 
         />
 
         <Text>Category</Text>
+        <Stack direction={"row"}>
           <Button colorScheme="teal" onClick={() => activityStore.setPredicate('all', 'true')}> {/*active={activityStore.predicate.has('isGoing')}*/}
-            All
-          </Button>
-          <Button colorScheme="teal" onClick={() => activityStore.setPredicate('isGoing', 'true')}> {/*active={activityStore.predicate.has('isGoing')}*/}
-            I´m going
-          </Button>
-          <Button colorScheme="teal" onClick={() => activityStore.setPredicate('isHost', 'true')}> {/*active={activityStore.predicate.has('isGoing')}*/}
-            I´m Hosting
-          </Button>
+              All
+            </Button>
+            <Button colorScheme="teal" onClick={() => activityStore.setPredicate('isGoing', 'true')}> {/*active={activityStore.predicate.has('isGoing')}*/}
+              I´m going
+            </Button>
+            <Button colorScheme="teal" onClick={() => activityStore.setPredicate('isHost', 'true')}> {/*active={activityStore.predicate.has('isGoing')}*/}
+              Musicians
+            </Button>
+            <Button colorScheme="teal" onClick={() => activityStore.setPredicate('isHost', 'true')}> {/*active={activityStore.predicate.has('isGoing')}*/}
+              Venues
+            </Button>
+        </Stack>
+          
         {/* <Select value={filter} onChange={(e) => handleSelector(e)} placeholder='Select Category'>
             <option value='option1'>All</option>
             <option value='option2'>You are going</option>
             <option value='option3'>You are Hosting</option>
         </Select> */}
-        <Button>Filter</Button>
+        <Button>Search</Button>
         {/* <Calendar 
                 onChange={(date) => setPredicate('startDate', date as Date)}
                 value={predicate.get('startDate') || new Date()}

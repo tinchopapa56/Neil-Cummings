@@ -1,4 +1,4 @@
-import { Wrap, Stack, Box,} from '@chakra-ui/react'
+import { Wrap, Stack, Box, Flex} from '@chakra-ui/react'
 import ActivityList from "./ActivityList";
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
@@ -40,23 +40,20 @@ useEffect(() => {
     }, [activityStore.activityRegistry.size, activityStore.loadActivities])
 
     return(
-        <Box>
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={handlePaging}
-                    hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
-                >
-                    <Stack direction="row" align={"flex-start"}>
-                        <Wrap align={"flex-start"} spacing="30px">
-                            <ActivityList />
-                        </Wrap>
-                        <Stack spacing={4}>
-                            <ActivityFilters />
-                        </Stack>
-                    </Stack>
-                </InfiniteScroll>
-               
-            {/* )} */}
+        <Box minH={"90vh"} bg="brand">
+            <InfiniteScroll
+                pageStart={0}
+                loadMore={handlePaging}
+                hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
+            >
+                <Stack align="center" justify={"center"}>
+                    <ActivityFilters />
+                    <Wrap align={"center"} spacing="30px">
+                        <ActivityList />
+                    </Wrap>
+                    
+                </Stack>
+            </InfiniteScroll>
         </Box>
         
     )
