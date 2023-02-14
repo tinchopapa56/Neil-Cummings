@@ -7,6 +7,7 @@ import { PagingParams } from '../../../app/models/pagination';
 import InfiniteScroll from 'react-infinite-scroller';
 import ActivityFilters from './ActivityFilters';
 import { toast } from 'react-toastify';
+import I1 from "./../../../imgs/cover2.png";
 
 
 
@@ -40,7 +41,13 @@ useEffect(() => {
     }, [activityStore.activityRegistry.size, activityStore.loadActivities])
 
     return(
-        <Box minH={"90vh"} bg="brand">
+        <Box minH={"90vh"} 
+            bg="white"
+            // backgroundImage={I1}
+            backgroundSize={"cover"}
+            backgroundPosition={"center"}
+            backgroundRepeat="no-repeat"
+        >
             <InfiniteScroll
                 pageStart={0}
                 loadMore={handlePaging}

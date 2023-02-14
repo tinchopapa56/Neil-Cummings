@@ -18,7 +18,7 @@ const ActivityAttendees: React.FC<Props> = ({act}) =>{
                 <PopoverTrigger>
                     <Avatar 
                         as={Link} href={`/profiles/${attendee.username}`}
-                        cursor={"pointer"} size='sm' _hover={{   transform: "scale(1.2)", }}
+                        cursor={"pointer"} size='md' _hover={{   transform: "scale(1.2)", }}
                         border={attendee.following ? "2px orange solid" :""}
                         name= { attendee.username ? `${attendee.username}` : 'TemplateName'} 
                         src={ attendee.image ? `${attendee.image}` : 'https://bit.ly/dan-abramov'} 
@@ -28,7 +28,7 @@ const ActivityAttendees: React.FC<Props> = ({act}) =>{
                     {/* <PopoverArrow /> */}
                     {/* <PopoverCloseButton /> */}
                     {/* <PopoverHeader>Attendee: </PopoverHeader> */}
-                    <PopoverBody w={40}>
+                    <PopoverBody w={80}>
                         <ProfileCard profile={attendee} />
                     </PopoverBody>
                 </PopoverContent>

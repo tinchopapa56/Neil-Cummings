@@ -14,20 +14,14 @@ const ActivityList: React.FC = () => {
     <Container maxW={'8xl'} p="6" w={"100%"}>
     <Box>
 
-    
-      {/* <Heading as="h1">All Activities</Heading> */}
-      <Divider marginTop="5" />
     {/* <WrapItem width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}> */}
         <WrapItem justifyContent={"center"} flexWrap="wrap" maxW={1200} width={"100%"} gap="30px">
 
           {activityStore.loadingInitial ? (
             <>
-              <Skeleton w={250} h={250} />
-              <Skeleton w={250} h={250} />
-              <Skeleton w={250} h={250} />
-              <Skeleton w={250} h={250} />
-              <Skeleton w={250} h={250} />
-              <Skeleton w={250} h={250} />
+            {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].map(sk => (
+              <Skeleton borderRadius={"lg"} key={sk} w={250} h={250} />
+            ))}
             </>
             ) : (
             activityStore.activitiesByDate?.map(activity => (
