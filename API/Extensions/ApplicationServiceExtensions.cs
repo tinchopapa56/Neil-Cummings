@@ -19,34 +19,34 @@ namespace API.Extensions
             services.AddSwaggerGen();
 
         // //SOLO DOCKER
-            // services.AddDbContext<DataContext>(opts=>
-            // {
-            //     // opts.UseSqlite(config.GetConnectionString("DefaultConnection"));
-            //     opts.UseNpgsql (config.GetConnectionString("DefaultConnection"));
+            services.AddDbContext<DataContext>(opts=>
+            {
+                // opts.UseSqlite(config.GetConnectionString("DefaultConnection"));
+                opts.UseNpgsql (config.GetConnectionString("DefaultConnection"));
 
-            // });
+            });
             
             //SOLO FLY io
-        services.AddDbContext<DataContext>(options =>
-        {
-                // Use connection string provided at runtime by FlyIO.
-                var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+        // services.AddDbContext<DataContext>(options =>
+        // {
+        //         // Use connection string provided at runtime by FlyIO.
+        //         var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-                // Parse connection URL to connection string for Npgsql
-                connUrl = connUrl.Replace("postgres://", string.Empty);
-                var pgUserPass = connUrl.Split("@")[0];
-                var pgHostPortDb = connUrl.Split("@")[1];
-                var pgHostPort = pgHostPortDb.Split("/")[0];
-                var pgDb = pgHostPortDb.Split("/")[1];
-                var pgUser = pgUserPass.Split(":")[0];
-                var pgPass = pgUserPass.Split(":")[1];
-                var pgHost = pgHostPort.Split(":")[0];
-                var pgPort = pgHostPort.Split(":")[1];
+        //         // Parse connection URL to connection string for Npgsql
+        //         connUrl = connUrl.Replace("postgres://", string.Empty);
+        //         var pgUserPass = connUrl.Split("@")[0];
+        //         var pgHostPortDb = connUrl.Split("@")[1];
+        //         var pgHostPort = pgHostPortDb.Split("/")[0];
+        //         var pgDb = pgHostPortDb.Split("/")[1];
+        //         var pgUser = pgUserPass.Split(":")[0];
+        //         var pgPass = pgUserPass.Split(":")[1];
+        //         var pgHost = pgHostPort.Split(":")[0];
+        //         var pgPort = pgHostPort.Split(":")[1];
 
-                var connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
-                options.UseNpgsql(connStr);
+        //         var connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};";
+        //         options.UseNpgsql(connStr);
             
-        });
+        // });
 
         //intento ambos FLY io
         // services.AddDbContext<DataContext>(options =>
