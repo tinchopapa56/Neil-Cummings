@@ -47,7 +47,8 @@ export default function ActivityCard({activity}: Props) {
     <>
         {activityStore.loading ? (<Skeleton w={250} h={250} />) : (
           // <Link href={`/activities/${activity.id}`} textDecoration="none" _hover={{ textDecoration: 'none' }}>
-            <Box bg="linear-gradient(to right top, #f9f871, #fcef6c, #fde569, #ffdc66, #ffd364);"
+            <Box bg="green.200"
+            // bg="linear-gradient(to right top, #f9f871, #fcef6c, #fde569, #ffdc66, #ffd364);"
                   as={Link} href={`/activities/${activity.id}`} boxShadow={"xl"} w={250} borderRadius="lg" overflow="hidden" key={activity.id}>
               
                   <Image transform="scale(1.0)" src={img} alt="some text" objectFit="contain" width="100%" transition="0.3s ease-in-out" _hover={{   transform: 'scale(1.05)', }} />
@@ -71,16 +72,16 @@ export default function ActivityCard({activity}: Props) {
                   {activity.isHost && (<Button variant="outline" color="orange">You are hosting</Button>)}
                   {activity.isGoing && ( <Button variant="outline" color="green">You are going</Button>)}
 
-                  <Stack justify="space-between" pt={2} direction={"row"}>
+                  {/* <Stack justify="space-between" pt={2} direction={"row"}>
                       <Button as={Link} href={`/activities/${activity.id}`} p={4} colorScheme='teal' size='xs'>View</Button>
                       <Button onClick={() => handleDelete(activity.id, true)} p={4} colorScheme="red" size='xs'> Delete</Button>
-                  </Stack>
-
+                  </Stack> */}
+                  <Text fontWeight={"bold"}>{activity.date?.toLocaleString().slice(0,10)}</Text>
                   <Stack pt={4} pb={4} direction="row">
                       <ActivityAttendees act={activity} />
                   </Stack>
 
-                  <Text color="#D16BA5">{activity.date?.toLocaleString()}</Text>
+                  
                 </Box>
                 
                 
