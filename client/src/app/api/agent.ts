@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { PaginatedResult } from "../models/pagination";
 
 
-axios.defaults.baseURL = "http://localhost:5001/api"
-// axios.defaults.baseURL = "http://localhost:2222/api"
+axios.defaults.baseURL = "http://localhost:8080/api"
+//                        http://localhost:8080/api/activities
 
 // axios.defaults.baseURL = process.env.REACT_APP_API_URL;  
 

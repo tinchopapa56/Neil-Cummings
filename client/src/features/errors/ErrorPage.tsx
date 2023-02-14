@@ -3,7 +3,7 @@ import {Button, Text, Heading, Stack, Link} from "@chakra-ui/react";
 import axios from 'axios';
 
 export default function ErrorPage() {
-    const baseUrl = 'http://localhost:5001/api/'
+    const baseUrl = 'http://localhost:8080/api/'
     // const baseUrl = process.env.REACT_APP_API_URL
 
     function handleNotFound() {

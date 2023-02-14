@@ -1,12 +1,12 @@
-# fly.toml file generated for ultimo on 2023-02-10T14:42:42-03:00
+# fly.toml file generated for repito on 2023-02-13T19:50:09-03:00
 
-app = "ultimo"
+app = "repito"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
 [build]
-  image = "tinchopapa55/ultimo"
+  image = "tinchopapa55/repito:latest"
 
 [env]
 
