@@ -232,26 +232,22 @@ import { useStore } from '../stores/store';
       ],
     },
     {
-      label: 'Find Work',
+      label: 'Find Musicians',
       children: [
         {
-          label: 'Job Board',
-          subLabel: 'Find your dream design job',
+          label: 'Soloists',
+          subLabel: 'Find upcoming artists & their personal work',
           href: '#',
         },
         {
-          label: 'Freelance Projects',
-          subLabel: 'An exclusive list for contract work',
+          label: 'Bands',
+          subLabel: 'Exclusive bands looking to rock things up',
           href: '#',
         },
       ],
     },
     {
       label: 'Learn Design',
-      href: '#',
-    },
-    {
-      label: 'Hire Designers',
       href: '#',
     },
   ];
