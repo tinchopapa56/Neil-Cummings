@@ -8,8 +8,8 @@ import { PaginatedResult } from "../models/pagination";
 
 
 // axios.defaults.baseURL = "/api"
-axios.defaults.baseURL = "https://bandify.fly.dev/api"
-//                        http://localhost:8080/api
+// axios.defaults.baseURL = "https://bandify.fly.dev/api"
+axios.defaults.baseURL = "http://localhost:8080/api"
 
 // axios.defaults.baseURL = process.env.REACT_APP_API_URL;  
 
