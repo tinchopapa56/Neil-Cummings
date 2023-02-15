@@ -15,7 +15,7 @@ function ProfilePageHeader({profile}: Props) {
     const randomIMG = "https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg"
 
     return (
-    <Stack align={"center"} p={4} bg="red.100" direction={"row"} justify="space-between">
+    <Stack borderRadius={"xl"} align={"center"} p={4} bg="red.100" direction={"row"} justify="space-between">
             <Stack direction ="row" align={"center"}>
               <Image src={profile?.image ? profile.image : randomIMG}
                 w={40} h={40} objectFit="cover" borderRadius={9999}

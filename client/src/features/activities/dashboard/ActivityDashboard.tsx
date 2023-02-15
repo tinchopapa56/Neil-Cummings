@@ -8,6 +8,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import ActivityFilters from './ActivityFilters';
 import { toast } from 'react-toastify';
 import I1 from "./../../../imgs/cover.png";
+import Footer from '../../../app/layout/Footer';
 
 
 

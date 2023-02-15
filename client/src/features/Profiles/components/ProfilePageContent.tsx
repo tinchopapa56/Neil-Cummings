@@ -42,19 +42,7 @@ function ProfilePageContent({profile}: Props) {
       {/* Selected section */}
       <Box flex="1">
         <Box bg="teal.100">
-          
-          {/* ABOUT */}
-          {renderedComponent.About && 
-            <>
-              <Stack align="center" p={4} bg="red.100" direction={"row"} divider={<Divider />}>
-                  <Heading>About</Heading>
-                  <CheckCircleIcon boxSize={8} color="green.300" />
-              </Stack>
-              <Box>
-                {profile?.bio || "Not much to say about me, i´m new here!"}
-              </Box>
-            </>
-          }
+
           {renderedComponent.Following && <ProfileSiguiendo title="following" /> }
           {renderedComponent.Followers && <ProfileSiguiendo title="followers" /> }
           {renderedComponent.Photos && <ProfilePhotos photos={profile.photos!} /> }

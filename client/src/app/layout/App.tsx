@@ -11,6 +11,7 @@ import { observer } from "mobx-react-lite";
 import { Outlet } from "react-router-dom";
 
 import { useStore } from '../stores/store';
+import Footer from "./Footer";
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
       <Box>
         <Navbar />
         <Outlet />
+        {/* <Footer /> */}
         <ToastContainer />
       </Box>
     
