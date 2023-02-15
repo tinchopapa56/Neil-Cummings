@@ -7,7 +7,7 @@ import imageArchitect2 from "../../../imgs/cover.png";
 import imageArchitect3 from "../../../imgs/cover.png";
 import React from "react";
 import { FaPlus } from "react-icons/fa";
-import ProjectCard from "./ProjectCard";
+import ProjectCard from "../profile page/ProjectCard";
 
 const Projects = () => {
   // Chakra color mode

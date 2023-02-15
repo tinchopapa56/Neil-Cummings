@@ -1,11 +1,11 @@
 import React, { SyntheticEvent, useState } from 'react'
 import { Box, Flex, Grid, Icon, Heading, GridItem, Link, Image, Text, Divider, Stack, Button, Avatar} from '@chakra-ui/react';
-import { useStore } from '../../../../app/stores/store';
-import { Photo, Profile } from '../../../../app/models/Interfaces';
+import { useStore } from '../../../app/stores/store';
+import { Photo, Profile } from '../../../app/models/Interfaces';
 import { observer } from 'mobx-react-lite';
 import { object } from 'yup';
 import {CheckCircleIcon} from "@chakra-ui/icons"
-import ImageUpload from '../ImageUpload/ImageUpload';
+import ImageUpload from '../components/ImageUpload/ImageUpload';
 import { FaPlus } from 'react-icons/fa';
 
 import { Card, CardBody, CardHeader,  useColorModeValue} from "@chakra-ui/react";
@@ -16,7 +16,7 @@ import { Card, CardBody, CardHeader,  useColorModeValue} from "@chakra-ui/react"
 import imageArchitect1 from "../../../../imgs/cover.png";
 import imageArchitect2 from "../../../imgs/cover.png";
 import imageArchitect3 from "../../../imgs/cover.png";
-import ProjectCard from '../ProjectCard';
+import ProjectCard from '../components/profile page/ProjectCard';
 
 interface Props {
     photos: Photo[]
@@ -48,7 +48,7 @@ interface Props {
 
   return (
     <>
-    <Card p='16px' my='24px'>
+    <Card p='16px'>
         <CardHeader p='12px 5px' mb='12px'>
         <Flex direction='column' justify={"flex-start"}>
           <Text fontSize='4xl' color={textColor} fontWeight='bold'>

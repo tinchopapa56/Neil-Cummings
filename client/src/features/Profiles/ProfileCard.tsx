@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Box, Image,Text, Stack, Icon} from "@chakra-ui/react"
 import {ArrowRightIcon} from "@chakra-ui/icons"
 import { Profile } from '../../app/models/Interfaces';
-import FollowButton from './components/FollowButton';
+import FollowButton from './FollowButton';
 // import FollowButton from './FollowButton';
 
 interface Props {

@@ -1,9 +1,9 @@
 
 import { Box, Flex, Grid, Icon, Heading, Link, Image, Text, Divider, Stack, Button, Avatar} from '@chakra-ui/react';
-import { useStore } from '../../../app/stores/store';
-import { Profile } from '../../../app/models/Interfaces';
+import { useStore } from '../../../../app/stores/store';
+import { Profile } from '../../../../app/models/Interfaces';
 import { observer } from 'mobx-react-lite';
-import FollowButton from './FollowButton';
+import FollowButton from '../../FollowButton';
 
 interface Props {
   profile: Profile;
