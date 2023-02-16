@@ -10,11 +10,8 @@ import {
 export const theme = extendTheme(
     {
       colors: {
-        // brand: "#C3FCF1",
-        // brand: "linear-gradient(to right top, #cbfff5, #beffe6, #bcffcf, #c7ffb2, #dbfb93);" ,
-        // brand: "linear-gradient(to right top, #cbfff5, #cbffeb, #d1ffde, #ddffd0, #ecffc2);",
-        // brand: "linear-gradient(to right top, #e7fffa, #e3fff4, #e3ffeb, #e8ffe0, #f1ffd5);",
-        brand: "white",
+        brand: "linear-gradient(to right top, #f9f871, #fee96c, #ffdb6a, #ffcd69, #ffc06a, #ffbd6a, #ffba6a, #ffb76a, #ffbe68, #ffc566, #ffcc65, #ffd364)",
+        bground: "gray.100",
       },
     //   components: {
     //     Alert: {

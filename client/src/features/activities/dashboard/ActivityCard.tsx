@@ -69,14 +69,14 @@ export default function ActivityCard({activity}: Props) {
                   </Stack>
                   {/* <Text as="p" fontSize="md" marginTop="2">{activity.description}</Text> */}
                   
-                  {activity.isHost && (<Button variant="outline" color="orange">You are hosting</Button>)}
-                  {activity.isGoing && ( <Button variant="outline" color="green">You are going</Button>)}
+                  {activity.isHost && (<Button variant="outline" color="orange">Hosting</Button>)}
+                  {activity.isGoing && ( <Button variant="outline" color="green">Going</Button>)}
 
                   {/* <Stack justify="space-between" pt={2} direction={"row"}>
                       <Button as={Link} href={`/activities/${activity.id}`} p={4} colorScheme='teal' size='xs'>View</Button>
                       <Button onClick={() => handleDelete(activity.id, true)} p={4} colorScheme="red" size='xs'> Delete</Button>
                   </Stack> */}
-                  <Text fontWeight={"bold"}>{activity.date?.toLocaleString().slice(0,10)}</Text>
+                  <Text fontWeight={"bold"}>{activity.date?.toDateString()}</Text>
                   <Stack pt={4} pb={4} direction="row">
                       <ActivityAttendees act={activity} />
                   </Stack>

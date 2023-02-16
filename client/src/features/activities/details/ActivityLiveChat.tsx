@@ -24,8 +24,8 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
     }, [liveCommentStore, activityId]);
 
     return (
-        <>
-            <Button w="100%" colorScheme={"teal"}> Press enter to post your comment</Button>
+        <Box p={4} my={4} bg="white">
+            <Heading>Chat about the event</Heading>
             <Box>
                 <Stack divider={<Divider />}>
                     {liveCommentStore.comments.map(comment => (
@@ -56,12 +56,6 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                 >
                     {({ isSubmitting, isValid, handleSubmit, values, handleChange }) => (
                         <Form className='ui form'>
-                            {/* <Textarea name="body"
-                                value={values.body}
-                                onChange={handleChange}
-                                placeholder='Enter your comment'
-                                size='sm'
-                            /> */}
                             <Field name='body'>
                                 {() => (
                                     <Box mt={2} position= 'relative'>
@@ -89,7 +83,7 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                     )}
                 </Formik>
             </Box>
-        </>
+        </Box>
 
     )
 })
