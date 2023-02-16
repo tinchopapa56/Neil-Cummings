@@ -21,7 +21,7 @@ interface Props{
     if(userStore.user?.username === profileStore.profile?.username) return null;
 
   return (
-    <Button  mt={2} colorScheme={perfil?.following ? "teal": "red"} w="100%" 
+    <Button  mt={2} colorScheme={perfil?.following ? "whatsapp": "red"} w="100%" 
         onClick={(e) => handleFollow(e, perfil.username) }
         _hover={{bg: perfil?.following ? "red": "teal" , variant: "ghost"}}
     >

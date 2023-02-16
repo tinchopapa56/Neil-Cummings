@@ -9,7 +9,7 @@ interface Props {
 }
 const ProfileCard2:React.FC<Props> = ({profile}:Props) => {
   return (
-    <Container maxW="5xl" p={{ base: 3, md: 4  }}>
+    <Container maxW="5xl" py={1} px={{ base: 3, md: 4  }}>
       <Stack w={{ base: "17rem", xs: "15rem"  }} spacing={2} p={4} border="1px solid" borderColor={useColorModeValue('gray.400', 'gray.600')} rounded="md" margin="0 auto"
         _hover={{
           boxShadow: useColorModeValue(

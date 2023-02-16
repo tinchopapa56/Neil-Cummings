@@ -26,9 +26,10 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
     return (
         <Box p={4} my={4} bg="white">
             <Heading>Chat about the event</Heading>
-            <Box>
-                <Stack divider={<Divider />}>
-                    {liveCommentStore.comments.map(comment => (
+            <Divider py={2} borderColor="green.200" />
+            <Box py={6}>
+                <Stack spacing={4} divider={<Divider />}>
+                    {/* {liveCommentStore.comments.map(comment => (
                         <Stack direction="row" key={comment.id}>
                             <Avatar src={comment.image || `${I1}`} />
                             <Box>
@@ -42,7 +43,23 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                             </Box>
                             
                         </Stack>
-                    ))}
+                    ))} */}
+                    {liveCommentStore.comments.map(comment => {
+                        console.log(comment)
+                        return <Stack direction="row" key={comment.id}>
+                            <Avatar src={comment.image || `${I1}`} />
+                            <Box>
+                                <Stack align="center" direction="row" spacing={2}>
+                                    <Text fontWeight={"bold"} as={Link} to={`/profiles/${comment.username}`}>
+                                        {comment.displayName || "Name"} 
+                                    </Text>
+                                    <Text fontSize={"sm"} color="gray.400">({formatDistanceToNow(comment.createdAt)} ago)</Text>
+                                </Stack>
+                                <Text>{comment.body}</Text>
+                            </Box>
+                            
+                        </Stack>
+                    })}
                 </Stack>
                 <Formik
                     onSubmit={(values, { resetForm }) =>{

@@ -39,12 +39,17 @@ namespace Application.LiveComments
 
             public async Task<Result<LiveCommentDto>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var activity = await _context.Activities.FindAsync(request.ActivityId);
+                var activity = await _context.Activities
+                    .Include(x => x.LiveComments)
+                    .ThenInclude(x => x.Author)
+                    .ThenInclude(x => x.Photos)
+                    .FirstOrDefaultAsync(x => x.Id == request.ActivityId);
+                // .FindAsync(request.ActivityId);
 
                 if (activity == null) return null;
 
                 var user = await _context.Users
-                    .Include(p => p.Photos)
+                    // .Include(p => p.Photos)
                     .SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
                 var comment = new LiveComment
