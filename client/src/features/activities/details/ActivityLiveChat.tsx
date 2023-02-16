@@ -45,7 +45,6 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                         </Stack>
                     ))} */}
                     {liveCommentStore.comments.map(comment => {
-                        console.log(comment)
                         return <Stack direction="row" key={comment.id}>
                             <Avatar src={comment.image || `${I1}`} />
                             <Box>
@@ -63,7 +62,7 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                 </Stack>
                 <Formik
                     onSubmit={(values, { resetForm }) =>{
-                        console.log(values)
+                        // console.log(values)
                         liveCommentStore.addComment(values).then(() => resetForm())
                     }}
                     initialValues={{ body: '' }}

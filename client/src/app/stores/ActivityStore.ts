@@ -426,31 +426,28 @@ export default class ActivityStore {
     loadActivity = async (id: string) => {
         let activity = this.getActivity(id);
         if (activity) {
-            this.selectedActivity = activity;
+            // this.selectedActivity = activity;
+            this.setActivity(activity);
+                runInAction(() => {this.selectedActivity = activity })
             return activity;
         } else {
             this.loadingInitial = true;
             try {
-                activity = await API_agent.Activities.details(id);
+                let activity = await API_agent.Activities.details(id);
                 this.setActivity(activity);
-                runInAction(() => {
-                    this.selectedActivity = activity;
-                })
-                this.setLoadingInitial(false);
+                runInAction(() => {this.selectedActivity = activity })
+
                 return activity;
-            } catch (error) {
-                console.log(error);
-                this.setLoadingInitial(false);
+            } catch (error) { console.log(error)}
+            finally {this.setLoadingInitial(false);
             }
-        }
+        } 
     }
 
     private setActivity = (activity: Activity) => {
         const user = store.userStore.user;
         if (user) {
-            activity.isGoing = activity.attendees!.some(
-                a => a.username === user.username
-            )
+            activity.isGoing = activity.attendees!.some(a => a.username === user.username)
             activity.isHost = activity.hostUsername === user.username;
             activity.host = activity.attendees?.find(x => x.username === activity.hostUsername);
         }

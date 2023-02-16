@@ -7,6 +7,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
+
+
 namespace Application.LiveComments
 {
     public class Create
@@ -27,14 +29,17 @@ namespace Application.LiveComments
         //HANDLER
         public class Handler : IRequestHandler<Command, Result<LiveCommentDto>>
         {
-            private readonly IUserAccessor _userAccessor;
             private readonly DataContext _context;
             private readonly IMapper _mapper;
+            private readonly IUserAccessor _userAccessor;
+            
+            
             public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
-                _mapper = mapper;
-                _context = context;
                 _userAccessor = userAccessor;
+                _context = context;
+                _mapper = mapper;
+                
             }
 
             public async Task<Result<LiveCommentDto>> Handle(Command request, CancellationToken cancellationToken)
@@ -48,9 +53,12 @@ namespace Application.LiveComments
 
                 if (activity == null) return null;
 
-                var user = await _context.Users
+                // var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername() );   //EL ERROR ES userACCESOR, getUSERNAAME
+                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == "jane" );
+
                     // .Include(p => p.Photos)
-                    .SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+                    // .SingleOrDefaultAsync(x => x.UserName == "jane");
+                    // .SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
                 var comment = new LiveComment
                 {

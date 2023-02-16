@@ -104,7 +104,6 @@ import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
 import ActivityLiveChat from './ActivityLiveChat';
 
-
 import { PropsWithChildren } from 'react';
 import { chakra, Container, Stack, Text, useColorModeValue, Image, Skeleton, Box, Link, TextProps, Button, Tag, Flex, Avatar, Grid, Card, CardBody, CardHeader} from '@chakra-ui/react';
 import ProfileCard2 from '../../Profiles/ProfileCard2';
@@ -118,7 +117,8 @@ const ActivityDetails: React.FC = () => {
 
     useEffect(() => {
       if(id) loadActivity(id)
-    }, [id, loadActivity] )
+      console.log(selectedActivity)
+    }, [id, loadActivity, selectedActivity] )
 
     const IPurple = "https://images.unsplash.com/photo-1605722243979-fe0be8158232?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
     const IGreen = "https://images.unsplash.com/photo-1574282673493-46d5ff24e086?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
@@ -166,7 +166,7 @@ const ActivityDetails: React.FC = () => {
       </Stack>
 
       
-      
+      {/* BUTTONERA */}
       <Container margin={0} maxW="100%" py="6">
         <Banner
           text={activityStore.selectedActivity?.isGoing ? "Cancel attendance" : "Join"}
@@ -174,6 +174,7 @@ const ActivityDetails: React.FC = () => {
         />
       </Container>
     
+    {/* Attendes */}
       <Card p='16px'>
         <CardHeader p='12px 5px' mb='12px'>
             <Flex direction='column'>
@@ -191,7 +192,8 @@ const ActivityDetails: React.FC = () => {
         </Grid>
         </CardBody>
       </Card>
-      
+
+    {/* LIVECHAT */}
       <ActivityLiveChat activityId={activityStore.selectedActivity?.id!} />
 
       </Container>
