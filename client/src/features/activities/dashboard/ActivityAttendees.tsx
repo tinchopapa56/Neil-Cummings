@@ -4,6 +4,7 @@ import { Link, Avatar} from '@chakra-ui/react';
 import ProfileCard from "../../Profiles/ProfileCard";
 
 import {Popover,PopoverTrigger,PopoverContent,PopoverHeader,PopoverBody,PopoverFooter,PopoverArrow,PopoverCloseButton,PopoverAnchor} from '@chakra-ui/react'
+import ProfileCard2 from "../../Profiles/ProfileCard2";
 
 interface Props {
     act: Activity
@@ -19,17 +20,15 @@ const ActivityAttendees: React.FC<Props> = ({act}) =>{
                     <Avatar 
                         as={Link} href={`/profiles/${attendee.username}`}
                         cursor={"pointer"} size='md' _hover={{   transform: "scale(1.2)", }}
-                        border={attendee.following ? "2px orange solid" :""}
+                        border={attendee.following ? "2px lightgreen solid" :""}
                         name= { attendee.username ? `${attendee.username}` : 'TemplateName'} 
                         src={ attendee.image ? `${attendee.image}` : 'https://bit.ly/dan-abramov'} 
                     />
                 </PopoverTrigger>
                 <PopoverContent>
-                    {/* <PopoverArrow /> */}
-                    {/* <PopoverCloseButton /> */}
-                    {/* <PopoverHeader>Attendee: </PopoverHeader> */}
-                    <PopoverBody w={80}>
-                        <ProfileCard profile={attendee} />
+                    <PopoverBody>
+                        <ProfileCard2 profile={attendee} />
+                        {/* <ProfileCard profile={attendee} /> */}
                     </PopoverBody>
                 </PopoverContent>
                 </Popover>

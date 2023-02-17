@@ -1,6 +1,8 @@
-import { Box, Flex, Text, IconButton, Button, Stack, Collapse, Icon, Link, Popover, PopoverTrigger, PopoverContent, useColorModeValue, useBreakpointValue, useDisclosure, Avatar} from '@chakra-ui/react';
+import { Box, Flex, Image, Text, IconButton, Button, Stack, Collapse, Icon, Link, Popover, PopoverTrigger, PopoverContent, useColorModeValue, useBreakpointValue, useDisclosure, Avatar} from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, ChevronDownIcon, ArrowDownIcon, ChevronRightIcon, UnlockIcon} from "@chakra-ui/icons";
 import { useStore } from '../stores/store';
+
+import LOGO from "../../imgs/logo.png"
 
   export default function WithSubnavigation() {
     const {commonStore} = useStore();
@@ -14,7 +16,7 @@ import { useStore } from '../stores/store';
   
     return (
       <Box>
-        <Flex bg="linear-gradient(to right top, #f9f871, #fee96c, #ffdb6a, #ffcd69, #ffc06a, #ffbd6a, #ffba6a, #ffb76a, #ffbe68, #ffc566, #ffcc65, #ffd364);"  color={useColorModeValue('gray.600', 'white')} minH={'60px'} py={{ base: 2 }} px={{ base: 4 }} borderBottom={1} borderStyle={'solid'} borderColor={useColorModeValue('gray.200', 'gray.900')} align={'center'}>
+        <Flex h={20} bg="linear-gradient(to right top, #f9f871, #fee96c, #ffdb6a, #ffcd69, #ffc06a, #ffbd6a, #ffba6a, #ffb76a, #ffbe68, #ffc566, #ffcc65, #ffd364);"  color={useColorModeValue('gray.600', 'white')} minH={'60px'} py={{ base: 2 }} px={{ base: 4 }} borderBottom={1} borderStyle={'solid'} borderColor={useColorModeValue('gray.200', 'gray.900')} align={'center'}>
           <Flex
             flex={{ base: 1, md: 'auto' }}
             ml={{ base: -2 }}
@@ -33,7 +35,9 @@ import { useStore } from '../stores/store';
               color="whiteAlpha.800"
             >
               <Link href={"/"} p={2} fontSize={'xl'}  _hover={{   textDecoration: 'none'}}>
-                <UnlockIcon boxSize={8} />
+                {/* <UnlockIcon boxSize={8} /> */}
+                <Image m={0} p={0} src={LOGO} w={10} borderRadius={9999}  />
+
               </Link>
               
             </Text>
@@ -44,7 +48,7 @@ import { useStore } from '../stores/store';
           </Flex>
                         
   
-          <Stack align={"center"} flex={{ base: 1, md: 0 }} justify={'flex-end'} direction={'row'} spacing={6}>
+          <Stack  align={"center"} flex={{ base: 1, md: 0 }} justify={'flex-end'} direction={'row'} spacing={6}>
             {commonStore.token ? (
               
                 <Popover trigger={'hover'} placement={'bottom-start'}>
@@ -100,12 +104,12 @@ import { useStore } from '../stores/store';
     const popoverContentBgColor = useColorModeValue('white', 'gray.800');
   
     return (
-      <Stack direction={'row'} spacing={4} align="center">
+      <Stack fontSize="xl" direction={'row'} spacing={4} align="center">
         {NAV_ITEMS.map((navItem) => (
-          <Box key={navItem.label}>
+          <Box  key={navItem.label}>
             <Popover trigger={'hover'} placement={'bottom-start'}>
               <PopoverTrigger>
-                <Link href={navItem.href ?? '#'} p={2}  fontSize={'sm'} fontWeight={500} color={"whiteAlpha.800"} _hover={{   textDecoration: 'none',   color: linkHoverColor, }}>
+                <Link href={navItem.href ?? '#'} p={2}  fontSize={'xl'} fontWeight={500} color={"whiteAlpha.800"} _hover={{   textDecoration: 'none',   color: linkHoverColor, }}>
                   {navItem.label}
                 </Link>
               </PopoverTrigger>

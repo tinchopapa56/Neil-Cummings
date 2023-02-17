@@ -34,6 +34,7 @@ function ProfileEvents() {
                     {profileStore.userEvents.map(ACT => (
                         <ProjectCard key={ACT.id}
                         image={imageArchitect1}
+                        id={ACT.id}
                         name={ACT.category}
                         category={ACT.title}
                         description={"activity description"}

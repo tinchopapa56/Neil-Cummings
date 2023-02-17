@@ -43,7 +43,7 @@ useEffect(() => {
 
     return(
         <Box minH={"90vh"} 
-            bg="white"
+            bg="gray.100"
             // backgroundImage={I1}
             backgroundSize={"cover"}
             backgroundPosition={"center"}
@@ -54,12 +54,12 @@ useEffect(() => {
                 loadMore={handlePaging}
                 hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
             >
-                <Stack align="center" justify={"center"}>
+                {/* <Stack direction={{xs:"column",s:"column",md:"column",lg:"row",xl:"row"}} align="flex-start" justify={"center"}> */}
+                <Stack direction={{base: "column",lg:"row",xl:"row"}} align={{base: "center",lg:"flex-start",xl:"flex-start"}} justify={"center"}>
                     <ActivityFilters />
                     <Wrap align={"center"} spacing="30px">
                         <ActivityList />
-                    </Wrap>
-                    
+                    </Wrap>  
                 </Stack>
             </InfiniteScroll>
         </Box>

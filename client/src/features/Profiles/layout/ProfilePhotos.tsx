@@ -9,14 +9,6 @@ import ImageUpload from '../components/ImageUpload/ImageUpload';
 import { FaPlus } from 'react-icons/fa';
 
 import { Card, CardBody, CardHeader,  useColorModeValue} from "@chakra-ui/react";
-// Assets
-
-
-
-import imageArchitect1 from "../../../../imgs/cover.png";
-import imageArchitect2 from "../../../imgs/cover.png";
-import imageArchitect3 from "../../../imgs/cover.png";
-import ProjectCard from '../components/profile page/ProjectCard';
 
 interface Props {
     photos: Photo[]

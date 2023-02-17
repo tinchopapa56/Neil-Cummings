@@ -333,6 +333,8 @@ export default class ActivityStore {
     pagingParams = new PagingParams();
     predicate = new Map().set('all', true);
 
+    
+
     constructor() {
         makeAutoObservable(this);
 
@@ -452,6 +454,12 @@ export default class ActivityStore {
             activity.host = activity.attendees?.find(x => x.username === activity.hostUsername);
         }
         activity.date = new Date(activity.date!);
+
+        if(activity.category == "music") activity.image = "https://as2.ftcdn.net/v2/jpg/04/01/00/31/1000_F_401003127_6ceOdBZAQE32f0k7AqRVlm0zYCAX8W55.jpg";
+        if(activity.category == "drinks") activity.image = "https://images.pexels.com/photos/751046/pexels-photo-751046.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+        if(activity.category == "culture") activity.image = "https://images.pexels.com/photos/1108532/pexels-photo-1108532.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+        if(activity.category == "travel") activity.image = "https://images.pexels.com/photos/3935702/pexels-photo-3935702.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" ;
+
         this.activityRegistry.set(activity.id, activity);
     }
 
@@ -475,8 +483,28 @@ export default class ActivityStore {
             runInAction(() => {
                 this.selectedActivity = newActivity;
             })
+            toast('🦄 Created Act Succesfully', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         } catch (error) {
             console.log(error);
+            toast('🦄 Error creating Act', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         }
     }
 

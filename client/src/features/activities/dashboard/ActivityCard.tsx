@@ -1,6 +1,8 @@
 import { ViewIcon } from '@chakra-ui/icons';
-import { Box, Heading, Text, Link, Image, HStack, Tag, Skeleton, SpaceProps, Stack, Button, Avatar} from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { Box, Heading, Text, Link, Image, HStack, Tag, Skeleton, SpaceProps, Stack, Button, Avatar, chakra, Flex, Icon, IconButton} from '@chakra-ui/react';
+import { Fragment, useEffect } from 'react';
+import { AiOutlineHeart } from 'react-icons/ai';
+import { BsTelephoneX } from 'react-icons/bs';
 import { Activity } from '../../../app/models/Interfaces';
 import {  useStore } from '../../../app/stores/store';
 import ActivityAttendees from './ActivityAttendees';
@@ -8,7 +10,6 @@ import ActivityAttendees from './ActivityAttendees';
 interface Props {
     activity: Activity
 }
-// 30 ch por llinea las cards
 
 interface IBlogTagsProps {
     tags: Array<string>;
@@ -37,67 +38,59 @@ export default function ActivityCard({activity}: Props) {
           activityStore.deleteAct(id);
         }
     }
-    useEffect(() => {
-      console.log(activity)
-    })
-
-    const img ='https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80'; 
-
+  const img = "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2020_06/3219686/200206-green-day-billie-joe-armstrong-2019-ac-521p.jpg"
+  // const imgs = {
+  //   music: "https://as2.ftcdn.net/v2/jpg/04/01/00/31/1000_F_401003127_6ceOdBZAQE32f0k7AqRVlm0zYCAX8W55.jpg",
+  //   drinks: "https://images.pexels.com/photos/751046/pexels-photo-751046.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   culture: "https://images.pexels.com/photos/1108532/pexels-photo-1108532.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  //   travel: "https://images.pexels.com/photos/3935702/pexels-photo-3935702.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" ,
+  // }
   return (
     <>
         {activityStore.loading ? (<Skeleton w={250} h={250} />) : (
-          // <Link href={`/activities/${activity.id}`} textDecoration="none" _hover={{ textDecoration: 'none' }}>
-            <Box bg="green.200"
-            // bg="linear-gradient(to right top, #f9f871, #fcef6c, #fde569, #ffdc66, #ffd364);"
-                  as={Link} href={`/activities/${activity.id}`} boxShadow={"xl"} w={250} borderRadius="lg" overflow="hidden" key={activity.id}>
-              
-                  <Image transform="scale(1.0)" src={img} alt="some text" objectFit="contain" width="100%" transition="0.3s ease-in-out" _hover={{   transform: 'scale(1.05)', }} />
+            <Box bg="linear-gradient(to right top, #f9f871, #fee96c, #ffdb6a, #ffcd69, #ffc06a, #ffbd6a, #ffba6a, #ffb76a, #ffbe68, #ffc566, #ffcc65, #ffd364);" color="black" 
+              as={Link} href={`/activities/${activity.id}`} boxShadow={"xl"} w={300} borderRadius="lg" overflow={"hidden"} key={activity.id}
+              // _hover={{   transform: "scale(1.02)", }}
+            >
+              <Image  transform="scale(1.0)" alt="some text" objectFit="contain" width="100%" transition="0.3s ease-in-out" _hover={{   transform: 'scale(1.05)', }} 
+                src={activity.image ? activity.image : img}
+              />
                 
-                <Box p={2}>
-                  {/* <BlogTags tags={activity.category} marginTop="3" /> */}
-                  <Tag mr={2} size={'md'} variant="solid" colorScheme="orange">
-                    {activity.category}
-                  </Tag>
-                  <Text fontSize="xl" marginTop="2" fontWeight={"bold"}>{activity.title}</Text>
-                  <Stack align="center" direction="row"> 
-                    <ViewIcon />
-                    <Text>{activity.city}</Text>
-                  </Stack>
-                  <Stack align="center" direction="row"> 
-                    <ViewIcon />
-                    <Text>{activity.hostUsername}</Text>
-                  </Stack>
-                  {/* <Text as="p" fontSize="md" marginTop="2">{activity.description}</Text> */}
-                  
-                  {activity.isHost && (<Button variant="outline" color="orange">Hosting</Button>)}
-                  {activity.isGoing && ( <Button variant="outline" color="green">Going</Button>)}
-
-                  {/* <Stack justify="space-between" pt={2} direction={"row"}>
-                      <Button as={Link} href={`/activities/${activity.id}`} p={4} colorScheme='teal' size='xs'>View</Button>
-                      <Button onClick={() => handleDelete(activity.id, true)} p={4} colorScheme="red" size='xs'> Delete</Button>
-                  </Stack> */}
-                  <Text fontWeight={"bold"}>{activity.date?.toDateString()}</Text>
-                  <Stack pt={4} pb={4} direction="row">
-                      <ActivityAttendees act={activity} />
-                  </Stack>
-
-                  
+              <Stack p={2} direction="column" spacing={2} w="100%" mt={{ base: '5px !important', sm: 0 }}>
+                <Flex align="center" justify="space-between">
+                  <chakra.h3 fontSize={{ base: 'lg', md: 'xl' }} fontWeight="bold">
+                    {activity.title.length > 20 ? (activity.title.slice(18) + "...") : activity.title }
+                  </chakra.h3>
+                  <chakra.h4 fontSize={{ base: 'lg', md: 'xl' }} border="1px solid white" p={2} borderRadius={9999} color="white" fontWeight="400">
+                    {activity.category.toUpperCase()}
+                  </chakra.h4>
+                </Flex>
+                <Box>
+                  <Text fontSize="md" fontWeight="300">
+                    {activity.city}
+                  </Text>
                 </Box>
+                <Flex alignItems="center" color="gray.500">
+                  {["a", "b"].map( info  => (
+                    <Fragment key={info}>
+                      <Text fontSize={{ base: 'sm', sm: 'md' }}>{activity.venue}</Text>
+                        <chakra.span mx={2} fontSize={{ base: 'sm', sm: 'md' }}>
+                          |
+                        </chakra.span>
+                    </Fragment>
+                  ))}
+                </Flex>
+
                 
-                
-                    
-                {/* <Stack direction="row" align="center" justify={"space-between"}> */}
-                  {/* <Avatar/> */}
-                  {/* src={activity.attendees.filter(attendee => attendee.username === activity.hostUsername)}  */}
-                  {/* <Text>{new Date('2021-04-06T19:01:27Z')}</Text> */}
-                  {/* <Text>{ activity.hostUsername ? `${activity.hostUsername}` : 'John Doe'}</Text> */}
-                {/* </Stack>   */}
+            </Stack>
+            <Stack pt={4} pb={4} direction="row">
+                <ActivityAttendees act={activity} />
+            </Stack>
+            {/* {activity.isHost && (<Button zIndex={2} position="absolute" top="0" left="0" variant="outline" color="orange">Hosting</Button>)}
+            {!activity.isHost && activity.isGoing && ( <Button zIndex={2} position="absolute" top="0" left="0" variant="outline" color="red">Going</Button>)} */}
+
             </Box>
-            // </Link>
         )}
-        
     </>
-    
-    
   )
 }

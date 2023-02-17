@@ -6,6 +6,7 @@ import {
   Button,
   Flex,
   Image,
+  Link,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -16,11 +17,12 @@ interface Props {
   name: string,
   category: string,
   avatars: string[],
-  description : string
+  description : string,
+  id: string
 }
 
 
-const ProjectCard:React.FC<Props> = ({ image, name, category, avatars, description }: Props) => {
+const ProjectCard:React.FC<Props> = ({ image, name, category, avatars, description, id }: Props) => {
   // Chakra color mode
   const textColor = useColorModeValue("gray.700", "white");
 
@@ -48,13 +50,15 @@ const ProjectCard:React.FC<Props> = ({ image, name, category, avatars, descripti
         </Text>
         <Flex justifyContent='space-between'>
           <Button
+            as={Link}
+            href= {`/activities/${id}`}
             variant='outline'
             colorScheme='teal'
             minW='110px'
             h='36px'
             fontSize='xs'
             px='1.5rem'>
-            VIEW PROJECT
+            VIEW EVENT
           </Button>
           <AvatarGroup size='xs'>
             {avatars.map((el, idx) => {

@@ -110,7 +110,7 @@ import ProfileCard2 from '../../Profiles/ProfileCard2';
 
 const ActivityDetails: React.FC = () => {
 
-      const {activityStore} = useStore();
+    const {activityStore} = useStore();
     const {loadActivity, selectedActivity, loading, updateAttendance} = activityStore;
 
     const {id} = useParams();
@@ -135,7 +135,7 @@ const ActivityDetails: React.FC = () => {
             minW={{ base: 'auto', md: '30rem' }}
             maxH="20rem"
             objectFit="cover"
-            src={IGreen}
+            src={activityStore.selectedActivity?.image ? activityStore.selectedActivity.image : IPurple}
             rounded="md"
             fallback={<Skeleton />}
           />
@@ -165,17 +165,8 @@ const ActivityDetails: React.FC = () => {
         </Stack>
       </Stack>
 
-      
-      {/* BUTTONERA */}
-      <Container margin={0} maxW="100%" py="6">
-        <Banner
-          text={activityStore.selectedActivity?.isGoing ? "Cancel attendance" : "Join"}
-          updateAttendanceFX={updateAttendance}
-        />
-      </Container>
-    
-    {/* Attendes */}
-      <Card p='16px'>
+      {/* Attendes */}
+      <Card my={4} p='16px'>
         <CardHeader p='12px 5px' mb='12px'>
             <Flex direction='column'>
             <Text fontSize='4xl' fontWeight='bold'>
@@ -192,6 +183,16 @@ const ActivityDetails: React.FC = () => {
         </Grid>
         </CardBody>
       </Card>
+      
+      {/* BUTTONERA */}
+      <Container margin={0} maxW="100%" py={4 }>
+        <Banner
+          text={activityStore.selectedActivity?.isGoing ? "Cancel attendance" : "Join"}
+          updateAttendanceFX={updateAttendance}
+        />
+      </Container>
+    
+    
 
     {/* LIVECHAT */}
       <ActivityLiveChat activityId={activityStore.selectedActivity?.id!} />

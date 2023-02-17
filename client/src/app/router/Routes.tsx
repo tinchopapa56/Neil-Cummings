@@ -11,6 +11,7 @@ import Register from '../../features/auth/Register';
 import ErrorPage from '../../features/errors/ErrorPage';
 import ProfilePage from '../../features/Profiles/ProfilePage';
 import RequireAuth from './RequireAuth';
+import ActivityForm2 from '../../features/activities/form/ActivityForm';
 
 export const routes: RouteObject[] = [
     {

@@ -1,6 +1,8 @@
 import { string } from "yup"
 
 export interface Activity {
+    image?: string,
+
     id: string;
     title: string;
     date: Date | null;

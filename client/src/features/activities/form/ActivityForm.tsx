@@ -1,15 +1,25 @@
+import React, { useState } from 'react';
+import { Progress, Box, ButtonGroup, Button, Heading, Text, Flex, FormControl, FormLabel, Input,Image, Select, SimpleGrid, InputLeftAddon, InputGroup, Textarea, FormHelperText, InputRightElement, Stack, Container,
+} from '@chakra-ui/react';
+
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import { Activity, ActivityFormValues } from '../../../app/models/Interfaces';
-
-import { Input, Button,Stack,Box, Text,} from '@chakra-ui/react';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {v4 as uuidv4} from "uuid";
 
-const ActivityForm = () => {
+interface Props {
+  setProgress: (params: any) => void
+}
+export const Form1:React.FC<Props> = ({setProgress}:Props) => {
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
+
+
+
   const navigate = useNavigate();
   const {activityStore} = useStore()
   const { id } = useParams<{ id: string }>();
@@ -18,7 +28,7 @@ const ActivityForm = () => {
 
   useEffect(() => {
     if (id) activityStore.loadActivity(id).then(activity => setinitialACT(new ActivityFormValues(activity)))
-  }, [id, activityStore.loadActivity]);
+  }, [id, activityStore.loadActivity,]);
 
   const validationSchema = Yup.object({
     title: Yup.string().required('The activity title is required'),
@@ -32,159 +42,141 @@ const ActivityForm = () => {
   const formik = useFormik({
     initialValues: initialACT,
     validationSchema,
-    // onSubmit: async (values: ActivityFormValues) => {
-    //   try {
-    //     console.log(values)
-    //     const res = await activityStore.createAct(values) //Toast y res en userStoreMOBX
-    //     console.log(res)
-
-    //     if (res) navigate("/")
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
     onSubmit: async (activity: ActivityFormValues) => {
-      console.log(activity, "deberia ser los vloores del form")
-      if (!activity.id) {
-          let newActivity = {
-              ...activity,
-              id: uuidv4()
-          };
-          activityStore.createAct(newActivity).then(() => navigate(`/activities/${newActivity.id}`))
-      } else {
-          activityStore.updateActivity(activity).then(() => navigate(`/activities/${activity.id}`))
+      try {
+        activity.id =  uuidv4();
+        activity.date = new Date(activity.date!)
+        console.log(activity);
+
+        const res = await activityStore.createAct(values) //Toast y res en userStoreMOBX
+        console.log(res)
+      } catch (error) {
+        console.log(error);
       }
-     }
+    },
   })
 
   const {errors, values, handleChange, handleSubmit, handleBlur} = formik
-  
   return (
-    <Box w={350} textAlign="center" m="0 auto" pt={16}>
-      <form onSubmit={handleSubmit}>
-        <Stack borderRadius={"xl"} p={4} spacing={8} boxShadow={"lg"}>
-        
-          <Text fontSize={"4xl"}>Create Activity</Text>
-          <Box>
-            <Text>Title</Text>
-            <Input  name='title'  onChange={ handleChange }  value={ values.title }  onBlur={ handleBlur }  placeholder={"title"} 
-            />
-            {errors.title && <Text color="red.300">{errors.title}</Text>}
-          </Box>
+    <form onSubmit={handleSubmit}>
+      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
+        Create Event
+      </Heading>
 
-          <Box mb={8}>
-            <Text>Description</Text>
-            <Input name='description' onChange={ handleChange } value={ values.description } onBlur={ handleBlur } maxLength={40} placeholder={'description'} 
-            />
-              {errors.description && <Text color="red.300">{errors.description}</Text>}
-          </Box>
-          <Box mb={8}>
-            <Text>Category</Text>
-            <Input name='category' onChange={ handleChange } value={ values.category } onBlur={ handleBlur } maxLength={40} placeholder={'category'} 
-            />
-              {errors.category && <Text color="red.300">{errors.category}</Text>}
-          </Box>
-          <Box mb={8}>
-            <Text>venue</Text>
-            <Input name='venue' onChange={ handleChange } value={ values.venue } onBlur={ handleBlur } maxLength={40} placeholder={'venue'} 
-            />
-              {errors.venue && <Text color="red.300">{errors.venue}</Text>}
-          </Box>
-          <Box mb={8}>
-            <Text>city</Text>
-            <Input name='city' onChange={ handleChange } value={ values.city } onBlur={ handleBlur } maxLength={40} placeholder={'city'} 
-            />
-              {errors.city && <Text color="red.300">{errors.city}</Text>}
-          </Box>
-          <Box mb={8}>
-            <Text>Date</Text>
-            <Input name='date' type="date" onChange={ handleChange } value={ values.date?.toString() } onBlur={ handleBlur } maxLength={40} placeholder={"date"} 
-            />
-              {errors.date && <Text color="red.300">{errors.date}</Text>}
-          </Box>
+      <Flex py={2} fontSize={"xl"} wrap="wrap" justify={"space-between"}>
+        {["title","city", "category", "venue"].map(field => ( 
+            <FormControl key={field} py={2} w={{xl:"20rem",lg: "20rem", md: "13rem"}} mr="5%">
+                <FormLabel htmlFor={field} fontWeight={'normal'}>
+                   {field}
+                </FormLabel>
+                <Input name={field} value={values.field} onChange={ handleChange } id={field} placeholder={field} onClick={() => setProgress(33.33)} />
+                {errors.field && <Text color="rec.300">{errors.field}</Text>}
+            </FormControl>
+          )
+        )}
+      </Flex>
 
-          <Stack pt={4} justify={"flex-end"} direction="row">
-            <Button w="25%" p={4} bg={'red.300'} color={'white'} _hover={{   bg: "blue.500", }}>
-              Cancel
-            </Button>
-            <Button type="submit" w="25%" p={4} bg={'green.300'} color={'white'} _hover={{   bg: 'green.500', }}>
-             Create Act
-            </Button>
-          </Stack>
 
-        </Stack>
-      </form>
-        
-      
-    </Box>
-  )
+      <FormControl onClick={() => setProgress(66.66)} py={4} fontSize={"xl"} mt="2%">
+        <FormLabel htmlFor="description" fontWeight={'normal'}>
+          Description
+        </FormLabel>
+        <Textarea id="description" p={4} value={values.description} onChange={handleChange} placeholder='Description' size='xl'
+        />
+        <FormHelperText>Usually includes information about the payment/ ticket options, technical specs of the venue, etc...</FormHelperText>
+      </FormControl>
+
+      <FormControl py={4} fontSize={"xl"} mt="2%">
+        <FormLabel htmlFor="date" fontWeight={'normal'}>
+          Date
+        </FormLabel>
+        <Input 
+            onClick={() =>  setProgress(85)}
+            id="date"
+            name="date"
+            type="date"
+            p={4}
+            value={values.date?.toString()}
+            onChange={handleChange}
+            placeholder='Date'
+            size='xl'
+        />
+        <FormHelperText>Usually includes information about the payment/ ticket options, technical specs of the venue, etc...</FormHelperText>
+      </FormControl>
+
+      {/* <Button onClick={() => console.log("ehh: ", values)} colorScheme="teal"> dsdadasdale</Button> */}
+
+        <ButtonGroup mt="5%" w="100%">
+          <Flex w="100%" justifyContent="space-between">
+            <Stack justify="flex-end" direction="row" spacing={2}>
+                <Button w="7rem" p={4} bg={'red.300'} color={'white'} _hover={{   bg: "blue.500", }}>
+                    Cancel
+                </Button>
+                <Button onClick={() =>  setProgress(99.99)} type="submit" w="7rem" p={4} bg={'green.300'} color={'white'} _hover={{   bg: 'green.500', }}>
+                    Create Act
+                </Button>
+            </Stack>
+          </Flex>
+        </ButtonGroup>
+    </form>
+  );
+};
+
+export default function ActivityForm() {
+  const [progress, setProgress] = useState(1);
+
+  return (
+    // <Container maxWidth="1680px">
+    //   <Stack p={8} spacing={0} justify="flex-start" align="flex-start" direction={{ base: 'column-reverse', md: 'row' }}>
+
+    //     <Flex display={{base:"none", xl:"flex"}} flex={1} justify="flex-start" align="flex-start">
+    //       <Image alt="bandify" objectFit="cover" src={I1} />
+    //     </Flex>
+      <>
+        <Box borderWidth="1px" rounded="lg" shadow="1px 1px 3px rgba(0,0,0,0.3)" maxWidth={800} p={6} m="5% auto">
+          <Progress
+            hasStripe
+            value={progress}
+            // value={50}
+            colorScheme='green'
+            mb="5%"
+            mx="5%"
+            isAnimated
+          >
+          </Progress>
+          
+          <Form1 setProgress={setProgress} />
+          
+        </Box>
+      </>
+  );
 }
 
+//SELECT SELECTOR
 
-export default observer(ActivityForm);
-
-// import { useEffect } from 'react';
-  
-//   const ActivityForm = () => {
-
-//     const {activityStore} = useStore();
-//     const {loadActivity, selectedACT} = activityStore;
-
-//     const {id} = useParams();
-
-//     useEffect(() => {
-//       if(id) loadActivity(id);
-//     }, [id, loadActivity])
-
-//     const handleCreate = () => {
-
-//     }
-
-
-//     return (
-//       <Flex w={"100%"} align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
-        
-//         <Stack spacing={8} w="80%" py={12} px={6}>
-//             <Heading fontSize={'4xl'}>Create/Edit activity</Heading>
-//           <Box rounded={'md'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
-            
-//             <Stack spacing={2}>
-//               <FormControl id="title">
-//                 <FormLabel>Title</FormLabel>
-//                 <Input placeholder={selectedACT?.title} />
-//               </FormControl>
-//               <FormControl id="password">
-//                 <FormLabel>Description</FormLabel>
-//                 <Input placeholder={selectedACT?.description} />
-//               </FormControl>
-//               <FormControl id="email">
-//                 <FormLabel>Category</FormLabel>
-//                 <Input placeholder={selectedACT?.category} />
-//               </FormControl>
-//               <FormControl id="email">
-//                 <FormLabel>Date</FormLabel>
-//                 <Input placeholder={selectedACT?.date} />
-//               </FormControl>
-//               <FormControl id="email">
-//                 <FormLabel>City</FormLabel>
-//                 <Input placeholder={selectedACT?.city} />
-//               </FormControl>
-
-//               <Stack pt={4} justify={"flex-end"} direction="row">
-//                 <Button w="15%" p={4} bg={'red.300'} color={'white'} _hover={{   bg: "blue.500", }}>
-//                   Cancel
-//                 </Button>
-//                 <Button w="15%" p={4} bg={'green.300'} color={'white'} _hover={{   bg: 'green.500', }}
-//                   onClick={() => handleCreate()}>
-//                   Create Act
-//                 </Button>
-//               </Stack>
-
-//             </Stack>
-//           </Box>
-//         </Stack>
-//       </Flex>
-//     );
-// }
-
-// export default observer(ActivityForm)
+// <FormControl as={GridItem} colSpan={[6, 3]}>
+//         <FormLabel
+//           htmlFor="country"
+//           fontSize="sm"
+//           fontWeight="md"
+//           color="gray.700"
+//           _dark={{
+//             color: 'gray.50',
+//           }}>
+//           Country / Region
+//         </FormLabel>
+//         <Select
+//           id="country"
+//           name="country"
+//           autoComplete="country"
+//           placeholder="Select option"
+//           focusBorderColor="brand.400"
+//           shadow="sm"
+//           size="sm"
+//           w="full"
+//           rounded="md">
+//           <option>United States</option>
+//           <option>Canada</option>
+//           <option>Mexico</option>
+//         </Select>
+//       </FormControl>

@@ -1,4 +1,4 @@
-import { Heading, Button, Text, Input, Stack } from '@chakra-ui/react'
+import { Heading, Button, Text, Input, Stack, Divider, Box, FormControl, FormLabel, GridItem, Select } from '@chakra-ui/react'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { useStore } from '../../../app/stores/store'
@@ -14,40 +14,57 @@ import { useStore } from '../../../app/stores/store'
   }
   
   return (
-    <Stack>
-        <Heading textAlign={"center"} mt={6} as="h2">Our shows</Heading>
-        <Text>Date</Text>
-        <Input name="date"  type="date"
-          onChange={(e) => activityStore.setPredicate('startdDate', e.target.value)} 
-        />
+    <Box>
+      <Heading textAlign={"center"} my={6} as="h2">Events</Heading>
+      {/* <Stack direction={{base: "column",lg:"row",xl:"row"}}> */}
+      <Stack direction={"column"}>
+        
+        {/* All - Musicians - Events */}
 
-        <Text>Category</Text>
-        <Stack direction={"row"}>
-          <Button colorScheme="teal" onClick={() => activityStore.setPredicate('all', 'true')}> {/*active={activityStore.predicate.has('isGoing')}*/}
-              All
-            </Button>
-            <Button colorScheme="teal" onClick={() => activityStore.setPredicate('isGoing', 'true')}> {/*active={activityStore.predicate.has('isGoing')}*/}
-              I´m going
-            </Button>
-            <Button colorScheme="teal" onClick={() => activityStore.setPredicate('isHost', 'true')}> {/*active={activityStore.predicate.has('isGoing')}*/}
-              Musicians
-            </Button>
-            <Button colorScheme="teal" onClick={() => activityStore.setPredicate('isHost', 'true')}> {/*active={activityStore.predicate.has('isGoing')}*/}
-              Venues
-            </Button>
+        <Stack p={2} w="xs" bg="white" boxShadow={"sm"} divider={<Divider />}>
+          {[{name:"ALL",action:"all"}, {name:"GOING",action:"isGoing"} ,{name:"HOSTING",action:"isHost"}].map(filter => (
+
+            <Box borderRadius="sm" cursor="pointer" _hover={{bg:"green.100"}}>
+              <Text p={2} onClick={() => activityStore.setPredicate(filter.action, 'true')}>
+                {filter.name}
+              </Text>
+            </Box>
+
+          ))}
         </Stack>
-          
-        {/* <Select value={filter} onChange={(e) => handleSelector(e)} placeholder='Select Category'>
-            <option value='option1'>All</option>
-            <option value='option2'>You are going</option>
-            <option value='option3'>You are Hosting</option>
-        </Select> */}
-        <Button>Search</Button>
-        {/* <Calendar 
-                onChange={(date) => setPredicate('startDate', date as Date)}
-                value={predicate.get('startDate') || new Date()}
-            />  */}
-    </Stack>
+
+        <Stack w="xs" bg="white" boxShadow={"sm"} divider={<Divider />}>
+          {["category", "city" ,"date"].map(filter => (
+            <FormControl p={2} as={GridItem} colSpan={[6, 3]}>
+              <FormLabel
+                htmlFor={filter}
+                fontSize="sm"
+                fontWeight="md"
+                color="gray.700"
+                _dark={{
+                  color: 'gray.50',
+                }}>
+                {filter}
+              </FormLabel>
+              <Select
+                id={filter}
+                name={filter}
+                autoComplete={filter}
+                placeholder="Select option"
+                focusBorderColor="brand.400"
+                shadow="sm"
+                size="sm"
+                w="full"
+                rounded="md">
+                <option>United States</option>
+                <option>Canada</option>
+                <option>Mexico</option>
+              </Select>
+          </FormControl>
+          ))}
+        </Stack>
+      </Stack>
+    </Box>
   )
 }
 
