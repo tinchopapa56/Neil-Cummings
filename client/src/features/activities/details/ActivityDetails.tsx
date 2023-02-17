@@ -94,20 +94,15 @@
 
 
 import React, {useEffect} from 'react';
-import { Activity } from '../../../app/models/Interfaces';
 
 import { useStore } from '../../../app/stores/store';
 
-import {UnlockIcon} from "@chakra-ui/icons"
-
 import { observer } from 'mobx-react-lite';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import ActivityLiveChat from './ActivityLiveChat';
 
-import { PropsWithChildren } from 'react';
-import { chakra, Container, Stack, Text, useColorModeValue, Image, Skeleton, Box, Link, TextProps, Button, Tag, Flex, Avatar, Grid, Card, CardBody, CardHeader} from '@chakra-ui/react';
+import { chakra, Container, Stack, Text, useColorModeValue, Image, Skeleton, Box, Link, Button, Tag, Flex, Grid, Card, CardBody, CardHeader} from '@chakra-ui/react';
 import ProfileCard2 from '../../Profiles/ProfileCard2';
-import UserStore from '../../../app/stores/UserStore';
 
 const ActivityDetails: React.FC = () => {
 
@@ -115,11 +110,18 @@ const ActivityDetails: React.FC = () => {
     const {loadActivity, selectedActivity, loading, updateAttendance, editAct, deleteAct} = activityStore;
 
     const {id} = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
       if(id) loadActivity(id)
-      console.log(selectedActivity)
     }, [id, loadActivity, selectedActivity] )
+
+    useEffect(() => {
+      if(activityStore.navigateToHome){
+        activityStore.setNavigateToHome(false)
+        navigate("/activities")
+      }
+    }, [activityStore.navigateToHome])
 
     const IPurple = "https://images.unsplash.com/photo-1605722243979-fe0be8158232?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
     // const IGreen = "https://images.unsplash.com/photo-1574282673493-46d5ff24e086?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
@@ -142,25 +144,27 @@ const ActivityDetails: React.FC = () => {
           />
         </Box>
         <Stack spacing={6} justifyContent="center">
-          <chakra.h1 fontSize="5xl" lineHeight={1} fontWeight="bold" textAlign="left">
+          <chakra.h1 color="brand" fontSize="5xl" lineHeight={1} fontWeight="bold" textAlign="left">
           {activityStore.selectedActivity?.title}
-            <Tag>{activityStore.selectedActivity?.date?.toDateString()}</Tag>
-            <Tag>{activityStore.selectedActivity?.city}</Tag>
           </chakra.h1>
-          <Box>
-            <Content>
-              EVENT Description: {selectedActivity?.description}  <br />
-              Event Category: {selectedActivity?.category}
-            </Content>
-            <Content mt={4}>
-              Connecting musicinas and venues to expand musical creativity, help them to get more out reach & form Music loving communities
-            </Content>
-            <Content mt={4}>
-              EVENT CITY: {selectedActivity?.city}  <br />
-              Venue: {selectedActivity?.venue}
-            </Content>
-          </Box>
-          <Link href="#" fontSize="sm" color="blue.400">
+
+          <Stack spacing={2}>
+            <Text fontSize="lg" textAlign="justify" maxW={"50ch"}  lineHeight="1.375" fontWeight="400" color="gray.700">
+              <span style={{color:"black", fontWeight: "bold"}}>Description:</span> {selectedActivity?.description}  
+            </Text>
+            <Text fontSize="lg" textAlign="justify"  maxW={"50ch"} lineHeight="1.375" fontWeight="400" color="gray.700">
+              Connecting musicians and venues to expand musical creativity, help them to get more out reach & form Music loving communities  
+            </Text>
+          </Stack>
+
+          <Stack direction="row">
+            <Tag>{activityStore.selectedActivity?.date?.toDateString()}</Tag>
+              <chakra.span mx={2} fontSize='sm'>|</chakra.span>
+            <Tag>{activityStore.selectedActivity?.city}</Tag>
+            <chakra.span mx={2} fontSize='sm'>|</chakra.span>
+              <Tag>{activityStore.selectedActivity?.category}</Tag>
+          </Stack>
+          <Link href={`/profiles/${selectedActivity?.hostUsername}`} fontSize="sm" color="blue.400">
             Hosted by {activityStore.selectedActivity?.hostUsername}
           </Link>
         </Stack>
@@ -193,6 +197,7 @@ const ActivityDetails: React.FC = () => {
           editActFX={editAct}
           deleteActFX={deleteAct}
           hostIsUser={activityStore.selectedActivity?.hostUsername == userStore.user?.username ? true : false}
+          ActID={selectedActivity?.hostUsername == userStore.user?.username ? id : ""}
         />
       </Container>
     
@@ -207,56 +212,15 @@ const ActivityDetails: React.FC = () => {
   );
 };
 
-const Content = ({ children, ...props }: PropsWithChildren<TextProps>) => {
-  return (
-    <Text
-      fontSize="md"
-      textAlign="left"
-      lineHeight="1.375"
-      fontWeight="400"
-      color="gray.500"
-      {...props}
-    >
-      {children}
-    </Text>
-  );
-};
-
-function DottedBox() {
-  return (
-    <Box position="absolute" left="-45px" top="-30px" height="full" maxW="700px" zIndex={-1}>
-      <svg
-        color={useColorModeValue('rgba(55,65,81, 0.1)', 'rgba(55,65,81, 0.7)')}
-        width="350"
-        height="420"
-        fill="none"
-      >
-        <defs>
-          <pattern
-            id="5d0dd344-b041-4d26-bec4-8d33ea57ec9b"
-            x="0"
-            y="0"
-            width="20"
-            height="20"
-            patternUnits="userSpaceOnUse"
-          >
-            <rect x="0" y="0" width="4" height="4" fill="currentColor"></rect>
-          </pattern>
-        </defs>
-        <rect width="404" height="404" fill="url(#5d0dd344-b041-4d26-bec4-8d33ea57ec9b)"></rect>
-      </svg>
-    </Box>
-  );
-}
-
 interface BannerProps {
   text: string;
   updateAttendanceFX: (params: any) => void;
   editActFX: (params: any) => void;
   deleteActFX: (params: any) => void;
   hostIsUser: boolean;
+  ActID?: string;
 }
-const Banner:React.FC<BannerProps> = ({text, updateAttendanceFX, editActFX, deleteActFX, hostIsUser} : BannerProps) => {
+const Banner:React.FC<BannerProps> = ({text, updateAttendanceFX, editActFX, deleteActFX, hostIsUser, ActID} : BannerProps) => {
   return (
     <Stack
       direction={{ base: 'column', md: 'row' }}
@@ -284,14 +248,16 @@ const Banner:React.FC<BannerProps> = ({text, updateAttendanceFX, editActFX, dele
           {text}
         </Button>
         <Button size="lg" rounded="md" mb={{ base: 2, sm: 0 }} _hover={{ bg: useColorModeValue('gray.300', 'gray.500') }} lineHeight={1}
-          onClick={editActFX}
+          // onClick={() => editActFX(ActID)}
+          as={Link}
+          href={`/manage/${ActID}`}
           disabled= {!hostIsUser}
           bg={hostIsUser ? "linear-gradient(to right top, #f9f871, #fee96c, #ffdb6a, #ffcd69, #ffc06a, #ffbd6a, #ffba6a, #ffb76a, #ffbe68, #ffc566, #ffcc65, #ffd364);" : useColorModeValue('gray.200', 'gray.600')}
         >
           Edit (Host only)
         </Button>
         <Button size="lg" rounded="md" mb={{ base: 2, sm: 0 }} _hover={{ bg: useColorModeValue('gray.300', 'gray.500') }} lineHeight={1}
-          onClick={deleteActFX}
+          onClick={() => deleteActFX(ActID)}
           disabled= {!hostIsUser}
           bg={hostIsUser ? "red.300" : useColorModeValue('gray.200', 'gray.600')}
         >
@@ -302,7 +268,5 @@ const Banner:React.FC<BannerProps> = ({text, updateAttendanceFX, editActFX, dele
     </Stack>
   );
 };
-
-
 
 export default observer(ActivityDetails);

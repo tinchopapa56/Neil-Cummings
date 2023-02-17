@@ -333,6 +333,8 @@ export default class ActivityStore {
     pagingParams = new PagingParams();
     predicate = new Map().set('all', true);
 
+    navigateToHome = false;
+
     
 
     constructor() {
@@ -470,6 +472,9 @@ export default class ActivityStore {
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
     }
+    setNavigateToHome = (state: boolean) => {
+        this.navigateToHome = state
+    }
 
     createAct = async (actNEW: ActivityFormValues) => {
         const user = store.userStore.user;
@@ -493,7 +498,6 @@ export default class ActivityStore {
                 progress: undefined,
                 theme: "dark",
             });
-            return true;
         } catch (error) {
             console.log(error);
             toast('🦄 Error creating Act', {
@@ -511,6 +515,7 @@ export default class ActivityStore {
 
     editAct = async (activity: ActivityFormValues) => {
         try {
+            console.log("act store:", activity)
             await API_agent.Activities.update(activity);
             runInAction(() => {
                 if (activity.id) {
@@ -519,19 +524,65 @@ export default class ActivityStore {
                     this.selectedActivity = updatedActivity as Activity;
                 } 
             })
+            toast('🦄 Edited Act Succesfully', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         } catch (error) {
             console.log(error);
         }
     }
+    // editAct = async (id: string) => {
+    //     let FULLact = this.getActivity(id);
+    //     let ActivityFormValues = {
+    //         id: FULLact!.id,
+    //         title:  FULLact!.title,
+    //         category:  FULLact!.category,
+    //         description:  FULLact!.description,
+    //         date:  FULLact!.date,
+    //         city:  FULLact!.city,
+    //         venue:  FULLact!.venue,
+    //     }
+    //     try {
+    //         await API_agent.Activities.update(ActivityFormValues);
+    //         runInAction(() => {
+    //             if (id) {
+    //                 let updatedActivity = {...this.getActivity(id), ...activity}
+    //                 this.activityRegistry.set(activity.id, updatedActivity as Activity);
+    //                 this.selectedActivity = updatedActivity as Activity;
+    //             } 
+    //         })
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
     deleteAct = async (id: string) => {
         this.loading = true;
         try {
+            console.log("actstore:", id)
             await API_agent.Activities.delete(id);
             runInAction(() => {
                 this.activityRegistry.delete(id);
                 this.loading = false;
             })
+            toast('🦄 Succesfully deleted', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+            this.setNavigateToHome(true)
         } catch (error) {
             console.log(error);
             runInAction(() => {

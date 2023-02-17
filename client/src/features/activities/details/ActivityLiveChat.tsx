@@ -80,6 +80,8 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                                             name="body"
                                             value={values.body}
                                             onChange={handleChange}
+                                            borderColor="brand"
+                                            _focus={{ borderColor: "brand" }}
                                             placeholder='Enter your comment'
                                             size='sm'
                                             onKeyPress={e => {
