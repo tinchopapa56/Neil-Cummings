@@ -17,8 +17,9 @@ export default class LiveCommentStore {
             this.hubConnection = new HubConnectionBuilder()
             // .withUrl(process.env.REACT_APP_CHAT_URL + '?activityId=' + activityId, {
             // .withUrl("http://localhost:5001/livechat?activityId=" + activityId, {
-                .withUrl("http://localhost:8080/livechat?activityId=" + activityId, {
+                // .withUrl("http://localhost:8080/livechat?activityId=" + activityId, {
             // .withUrl("https://bandify.fly.dev/livechat?activityId=" + activityId, {
+                .withUrl("/livechat?activityId=" + activityId, {
                 accessTokenFactory: () => store.userStore.user?.token!
             })
             .withAutomaticReconnect()
