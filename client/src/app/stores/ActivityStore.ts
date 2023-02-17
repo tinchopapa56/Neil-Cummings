@@ -493,6 +493,7 @@ export default class ActivityStore {
                 progress: undefined,
                 theme: "dark",
             });
+            return true;
         } catch (error) {
             console.log(error);
             toast('🦄 Error creating Act', {

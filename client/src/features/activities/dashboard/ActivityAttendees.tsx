@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { Activity } from "../../../app/models/Interfaces";
 import { Link, Avatar} from '@chakra-ui/react';
-import ProfileCard from "../../Profiles/ProfileCard";
 
 import {Popover,PopoverTrigger,PopoverContent,PopoverHeader,PopoverBody,PopoverFooter,PopoverArrow,PopoverCloseButton,PopoverAnchor} from '@chakra-ui/react'
 import ProfileCard2 from "../../Profiles/ProfileCard2";

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Progress, Box, ButtonGroup, Button, Heading, Text, Flex, FormControl, FormLabel, Input,Image, Select, SimpleGrid, InputLeftAddon, InputGroup, Textarea, FormHelperText, InputRightElement, Stack, Container,
+import { Progress, Box, ButtonGroup, Button, Heading, Text, Flex, FormControl, FormLabel, Input,Image, Select, SimpleGrid, InputLeftAddon, InputGroup, Textarea, FormHelperText, InputRightElement, Stack, Container, GridItem,
 } from '@chakra-ui/react';
 
 import { useStore } from '../../../app/stores/store';
@@ -49,7 +49,7 @@ export const Form1:React.FC<Props> = ({setProgress}:Props) => {
         console.log(activity);
 
         const res = await activityStore.createAct(values) //Toast y res en userStoreMOBX
-        console.log(res)
+        if(res) navigate("/activities")
       } catch (error) {
         console.log(error);
       }
@@ -64,7 +64,7 @@ export const Form1:React.FC<Props> = ({setProgress}:Props) => {
       </Heading>
 
       <Flex py={2} fontSize={"xl"} wrap="wrap" justify={"space-between"}>
-        {["title","city", "category", "venue"].map(field => ( 
+        {["title","city", "venue"].map(field => ( 
             <FormControl key={field} py={2} w={{xl:"20rem",lg: "20rem", md: "13rem"}} mr="5%">
                 <FormLabel htmlFor={field} fontWeight={'normal'}>
                    {field}
@@ -103,6 +103,20 @@ export const Form1:React.FC<Props> = ({setProgress}:Props) => {
         />
         <FormHelperText>Usually includes information about the payment/ ticket options, technical specs of the venue, etc...</FormHelperText>
       </FormControl>
+
+      <FormControl as={GridItem} colSpan={[6, 3]} py={4} fontSize={"xl"} mt="2%">
+              <FormLabel htmlFor="category" fontWeight="normal" color="gray.700">
+                Category
+              </FormLabel>
+              <Select id="category" autoComplete="category" placeholder="Select Category" focusBorderColor="brand.400" shadow="sm" size="xl" w="full" rounded="md"
+              name="category" value={values.category}  onChange={handleChange}>
+                <option value="drinks">drinks</option>
+                <option value="culture">culture</option>
+                <option value="music">music</option>
+                <option value="food">food</option>
+                <option value="travel">travel</option>
+              </Select>
+          </FormControl>
 
       {/* <Button onClick={() => console.log("ehh: ", values)} colorScheme="teal"> dsdadasdale</Button> */}
 

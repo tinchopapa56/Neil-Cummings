@@ -11,11 +11,11 @@ const ActivityList: React.FC = () => {
   
 
   return (
-    <Container maxW={'1800'} p="6" w={"100%"}>
+    <Container maxW={'1600'} p="6" w={"100%"}>
     <Box>
 
     {/* <WrapItem width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}> */}
-        <WrapItem justifyContent={"center"} flexWrap="wrap" maxW={1600} width={"100%"} gap="30px">
+        <WrapItem justifyContent={"center"} flexWrap="wrap" maxW={1500} width={"100%"} gap="30px">
 
           {activityStore.loadingInitial ? (
             <>

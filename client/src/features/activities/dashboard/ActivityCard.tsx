@@ -49,41 +49,52 @@ export default function ActivityCard({activity}: Props) {
     <>
         {activityStore.loading ? (<Skeleton w={250} h={250} />) : (
             <Box bg="linear-gradient(to right top, #f9f871, #fee96c, #ffdb6a, #ffcd69, #ffc06a, #ffbd6a, #ffba6a, #ffb76a, #ffbe68, #ffc566, #ffcc65, #ffd364);" color="black" 
-              as={Link} href={`/activities/${activity.id}`} boxShadow={"xl"} w={300} borderRadius="lg" overflow={"hidden"} key={activity.id}
+              as={Link} href={`/activities/${activity.id}`} boxShadow={"xl"} w={280} borderRadius="lg" overflow={"hidden"} key={activity.id}
               // _hover={{   transform: "scale(1.02)", }}
             >
-              <Image  transform="scale(1.0)" alt="some text" objectFit="contain" width="100%" transition="0.3s ease-in-out" _hover={{   transform: 'scale(1.05)', }} 
+              <Image  transform="scale(1.0)" alt="some text" objectFit="cover" width="100%" transition="0.3s ease-in-out" _hover={{   transform: 'scale(1.05)', }} 
                 src={activity.image ? activity.image : img}
               />
                 
-              <Stack p={2} direction="column" spacing={2} w="100%" mt={{ base: '5px !important', sm: 0 }}>
-                <Flex align="center" justify="space-between">
-                  <chakra.h3 fontSize={{ base: 'lg', md: 'xl' }} fontWeight="bold">
-                    {activity.title.length > 20 ? (activity.title.slice(18) + "...") : activity.title }
-                  </chakra.h3>
-                  <chakra.h4 fontSize={{ base: 'lg', md: 'xl' }} border="1px solid white" p={2} borderRadius={9999} color="white" fontWeight="400">
-                    {activity.category.toUpperCase()}
+              <Stack px={2} direction="column" spacing={2} w="100%">
+                <Flex mt={1} align="center" justify="space-between">
+                  <chakra.h4 fontSize={{ base: 'md', md: 'lg' }} fontWeight="bold">
+                    {activity.title.length > 20 ? (activity.title.slice(0, 15) + "...") : activity.title }
                   </chakra.h4>
+                  <chakra.h5 fontSize={{ base: 'md', md: 'lg' }} border="1px solid white" p={1} borderRadius={9999} color="white" fontWeight="400">
+                    {activity.category.toUpperCase()}
+                  </chakra.h5>
                 </Flex>
                 <Box>
                   <Text fontSize="md" fontWeight="300">
-                    {activity.city}
+                  {activity.description.length > 36 ? (activity.description.slice(0,26) + "...") : activity.description }
                   </Text>
                 </Box>
                 <Flex alignItems="center" color="gray.500">
-                  {["a", "b"].map( info  => (
-                    <Fragment key={info}>
-                      <Text fontSize={{ base: 'sm', sm: 'md' }}>{activity.venue}</Text>
-                        <chakra.span mx={2} fontSize={{ base: 'sm', sm: 'md' }}>
-                          |
-                        </chakra.span>
-                    </Fragment>
+                  {["a"].map( info  => (
+                    <>
+                      <Fragment key={info}>
+                        <Text fontSize='sm'>{activity.city}</Text>
+                          <chakra.span mx={2} fontSize='sm'>
+                            |     
+                          </chakra.span>
+                        </Fragment>
+                        <Fragment key={info}>
+                        <Text fontSize='sm'>{activity.hostUsername}</Text>
+                          <chakra.span mx={2} fontSize={{ base: 'sm', sm: 'md' }}>
+                            |
+                          </chakra.span>
+                      </Fragment>
+                      <Fragment key={info}>
+                        <Text fontSize='sm'>{activity.venue}</Text>
+                      </Fragment>
+                    </>
                   ))}
                 </Flex>
 
                 
             </Stack>
-            <Stack pt={4} pb={4} direction="row">
+            <Stack p={2} direction="row">
                 <ActivityAttendees act={activity} />
             </Stack>
             {/* {activity.isHost && (<Button zIndex={2} position="absolute" top="0" left="0" variant="outline" color="orange">Hosting</Button>)}

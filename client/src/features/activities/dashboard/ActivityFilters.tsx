@@ -1,4 +1,5 @@
 import { Heading, Button, Text, Input, Stack, Divider, Box, FormControl, FormLabel, GridItem, Select } from '@chakra-ui/react'
+import { useFormik } from 'formik'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { useStore } from '../../../app/stores/store'
@@ -12,20 +13,28 @@ import { useStore } from '../../../app/stores/store'
     setFilter(e.target.value)
     console.log(filter)
   }
+  const formik = useFormik({
+    initialValues: {category:"",},
+    onSubmit: () => {
+      console.log("filter");
+    },
+  })
+
+  const {errors, values, handleChange, handleSubmit, handleBlur} = formik
   
   return (
-    <Box>
+    <Box ml={{base:0, lg: 4, xl: 4}}>
       <Heading textAlign={"center"} my={6} as="h2">Events</Heading>
       {/* <Stack direction={{base: "column",lg:"row",xl:"row"}}> */}
       <Stack direction={"column"}>
         
         {/* All - Musicians - Events */}
 
-        <Stack p={2} w="xs" bg="white" boxShadow={"sm"} divider={<Divider />}>
+        <Stack w="xs" bg="white" boxShadow={"sm"} divider={<Divider />}>
           {[{name:"ALL",action:"all"}, {name:"GOING",action:"isGoing"} ,{name:"HOSTING",action:"isHost"}].map(filter => (
 
-            <Box borderRadius="sm" cursor="pointer" _hover={{bg:"green.100"}}>
-              <Text p={2} onClick={() => activityStore.setPredicate(filter.action, 'true')}>
+            <Box p={2} borderRadius="sm" cursor="pointer" _hover={{bg:"green.100"}}>
+              <Text  onClick={() => activityStore.setPredicate(filter.action, 'true')}>
                 {filter.name}
               </Text>
             </Box>
@@ -34,7 +43,7 @@ import { useStore } from '../../../app/stores/store'
         </Stack>
 
         <Stack w="xs" bg="white" boxShadow={"sm"} divider={<Divider />}>
-          {["category", "city" ,"date"].map(filter => (
+          {["city" ,"date"].map(filter => (
             <FormControl p={2} as={GridItem} colSpan={[6, 3]}>
               <FormLabel
                 htmlFor={filter}
@@ -62,6 +71,19 @@ import { useStore } from '../../../app/stores/store'
               </Select>
           </FormControl>
           ))}
+          <FormControl as={GridItem} colSpan={[6, 3]} py={4} fontSize={"xl"} mt="2%">
+              <FormLabel htmlFor="category" fontWeight="normal" color="gray.700">
+                Category
+              </FormLabel>
+              <Select id="category" autoComplete="category" placeholder="Select Category" focusBorderColor="brand.400" shadow="sm" size="xl" w="full" rounded="md"
+              name="category" value={values.category}  onChange={handleChange}>
+                <option value="drinks">drinks</option>
+                <option value="culture">culture</option>
+                <option value="music">music</option>
+                <option value="food">food</option>
+                <option value="travel">travel</option>
+              </Select>
+          </FormControl>
         </Stack>
       </Stack>
     </Box>
