@@ -107,11 +107,12 @@ import ActivityLiveChat from './ActivityLiveChat';
 import { PropsWithChildren } from 'react';
 import { chakra, Container, Stack, Text, useColorModeValue, Image, Skeleton, Box, Link, TextProps, Button, Tag, Flex, Avatar, Grid, Card, CardBody, CardHeader} from '@chakra-ui/react';
 import ProfileCard2 from '../../Profiles/ProfileCard2';
+import UserStore from '../../../app/stores/UserStore';
 
 const ActivityDetails: React.FC = () => {
 
-    const {activityStore} = useStore();
-    const {loadActivity, selectedActivity, loading, updateAttendance} = activityStore;
+    const {activityStore, userStore} = useStore();
+    const {loadActivity, selectedActivity, loading, updateAttendance, editAct, deleteAct} = activityStore;
 
     const {id} = useParams();
 
@@ -121,7 +122,7 @@ const ActivityDetails: React.FC = () => {
     }, [id, loadActivity, selectedActivity] )
 
     const IPurple = "https://images.unsplash.com/photo-1605722243979-fe0be8158232?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-    const IGreen = "https://images.unsplash.com/photo-1574282673493-46d5ff24e086?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+    // const IGreen = "https://images.unsplash.com/photo-1574282673493-46d5ff24e086?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
   return (
     <Box bg="gray.100">
       <Container maxW="7xl" px={{ base: 6, md: 3 }} py={14}>
@@ -189,6 +190,9 @@ const ActivityDetails: React.FC = () => {
         <Banner
           text={activityStore.selectedActivity?.isGoing ? "Cancel attendance" : "Join"}
           updateAttendanceFX={updateAttendance}
+          editActFX={editAct}
+          deleteActFX={deleteAct}
+          hostIsUser={activityStore.selectedActivity?.hostUsername == userStore.user?.username ? true : false}
         />
       </Container>
     
@@ -248,8 +252,11 @@ function DottedBox() {
 interface BannerProps {
   text: string;
   updateAttendanceFX: (params: any) => void;
+  editActFX: (params: any) => void;
+  deleteActFX: (params: any) => void;
+  hostIsUser: boolean;
 }
-const Banner:React.FC<BannerProps> = ({text, updateAttendanceFX} : BannerProps) => {
+const Banner:React.FC<BannerProps> = ({text, updateAttendanceFX, editActFX, deleteActFX, hostIsUser} : BannerProps) => {
   return (
     <Stack
       direction={{ base: 'column', md: 'row' }}
@@ -263,17 +270,10 @@ const Banner:React.FC<BannerProps> = ({text, updateAttendanceFX} : BannerProps) 
       p={{ base: 8, md: 16 }}
     >
       <Box>
-        <chakra.h1 fontSize="4xl" lineHeight={1.2} fontWeight="bold">
+        <chakra.h1 fontSize="4xl" lineHeight={1.2} color="linear-gradient(to right top, #f9f871, #fee96c, #ffdb6a, #ffcd69, #ffc06a, #ffbd6a, #ffba6a, #ffb76a, #ffbe68, #ffc566, #ffcc65, #ffd364);" fontWeight="bold">
           Ready to enjoy live music?
         </chakra.h1>
-        <chakra.h2
-          fontSize="2xl"
-          lineHeight={1.2}
-          fontWeight="bold"
-          bgGradient="linear(to-l, #0ea5e9,#2563eb)"
-          // bg="brand"
-          bgClip="text"
-        >
+        <chakra.h2 fontSize="2xl" lineHeight={1.2} fontWeight="bold" bgGradient="linear(to-l, #0ea5e9,#2563eb)" bg="brand" bgClip="text">
           Confirm your attendance to the show.
         </chakra.h2>
       </Box>
@@ -283,18 +283,21 @@ const Banner:React.FC<BannerProps> = ({text, updateAttendanceFX} : BannerProps) 
         >
           {text}
         </Button>
-        <Button
-          as={Link}
-          href="#"
-          size="lg"
-          rounded="md"
-          mb={{ base: 2, sm: 0 }}
-          bg={useColorModeValue('gray.200', 'gray.600')}
-          _hover={{ bg: useColorModeValue('gray.300', 'gray.500') }}
-          lineHeight={1}
+        <Button size="lg" rounded="md" mb={{ base: 2, sm: 0 }} _hover={{ bg: useColorModeValue('gray.300', 'gray.500') }} lineHeight={1}
+          onClick={editActFX}
+          disabled= {!hostIsUser}
+          bg={hostIsUser ? "linear-gradient(to right top, #f9f871, #fee96c, #ffdb6a, #ffcd69, #ffc06a, #ffbd6a, #ffba6a, #ffb76a, #ffbe68, #ffc566, #ffcc65, #ffd364);" : useColorModeValue('gray.200', 'gray.600')}
         >
-          Manage (host)
+          Edit (Host only)
         </Button>
+        <Button size="lg" rounded="md" mb={{ base: 2, sm: 0 }} _hover={{ bg: useColorModeValue('gray.300', 'gray.500') }} lineHeight={1}
+          onClick={deleteActFX}
+          disabled= {!hostIsUser}
+          bg={hostIsUser ? "red.300" : useColorModeValue('gray.200', 'gray.600')}
+        >
+          Delete (Host only)
+        </Button>
+        
       </Stack>
     </Stack>
   );

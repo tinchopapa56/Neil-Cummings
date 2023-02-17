@@ -508,7 +508,7 @@ export default class ActivityStore {
         }
     }
 
-    updateActivity = async (activity: ActivityFormValues) => {
+    editAct = async (activity: ActivityFormValues) => {
         try {
             await API_agent.Activities.update(activity);
             runInAction(() => {
