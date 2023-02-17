@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import React from "react";
 import { useStore } from "../../../../app/stores/store";
 import ProfileCard2 from "../../ProfileCard2";
+import I1 from "../../../../imgs/cover3.png"
 
 const Follow:React.FC = () => {
   // Chakra color mode
@@ -11,6 +12,7 @@ const Follow:React.FC = () => {
   const {profileStore} = useStore(); 
   console.log(profileStore.followings)
 
+  
   return (
     <Card p='16px'>
       <CardHeader p='12px 5px' mb='12px'>
@@ -60,7 +62,7 @@ const Follow:React.FC = () => {
                           as={Link} href={`/profiles/${attendee.username}`}
                           cursor={"pointer"} size='xl' _hover={{   transform: "scale(1.2)", }}
                           name= { attendee.username ? `${attendee.username}` : 'TemplateName'} 
-                          src={ attendee.image ? `${attendee.image}` : 'https://bit.ly/dan-abramov'} 
+                          src={ attendee.image ? `${attendee.image}` : `${I1}` } 
                       />
                   </PopoverTrigger>
                   <PopoverContent>
