@@ -70,7 +70,7 @@ export default function ActivityForm() {
   return (
       <>
         <Box borderWidth="1px" rounded="lg" shadow="1px 1px 3px rgba(0,0,0,0.3)" maxWidth={800} p={6} m="5% auto">
-          <Progress hasStripe value={progress} value={50} colorScheme='green' mb="5%" mx="5%" isAnimated>
+          <Progress hasStripe value={progress} colorScheme='green' mb="5%" mx="5%" isAnimated>
           </Progress>
           {/* FORM */}
 
@@ -85,7 +85,11 @@ export default function ActivityForm() {
                       <FormLabel htmlFor={field} fontWeight={'normal'}>
                         {field}
                       </FormLabel>
+                      {/* 
+                        // @ts-ignore */}
                       <Input name={field} value={values.field} onChange={ handleChange } id={field} placeholder={field} onClick={() => setProgress(33.33)} />
+                      {/* 
+                        // @ts-ignore */}
                       {errors.field && <Text color="rec.300">{errors.field}</Text>}
                   </FormControl>
                 )
