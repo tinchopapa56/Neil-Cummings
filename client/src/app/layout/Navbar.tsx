@@ -72,12 +72,12 @@ import LOGO from "../../imgs/logo.png"
               ):(
               <>
                 <Link href={"/login"} p={".5em 0"} fontSize={'xl'}  _hover={{   textDecoration: 'none'}}>
-                  <Button display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} color={'white'} bg={'teal.300'} _hover={{bg: 'teal.400',}}>
+                  <Button bg="brand" color="white" display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} _hover={{bg: 'green.300',}}>
                     Sign in
                   </Button>
                 </Link>
                 <Link href={"/register"} p={".5em 0"} fontSize={'xl'}  _hover={{   textDecoration: 'none'}}>
-                  <Button display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} color={'white'} bg={'pink.400'} _hover={{bg: 'pink.300',}}>
+                  <Button display={{ base: 'none', md: 'inline-flex' }} fontSize={'sm'} fontWeight={600} color={'white'} bg={'red.300'} _hover={{bg: 'red.400',}}>
                     Sign Up
                   </Button>
                 </Link>
@@ -226,13 +226,13 @@ import LOGO from "../../imgs/logo.png"
         {
           label: 'Top Upcoming activities',
           subLabel: 'Trending Design to inspire you',
-          href: '/activities/top',
+          href: '/activities',
         },
-        {
-          label: 'Recent & Upcoming activities (This month)',
-          subLabel: 'Up-and-coming Designers',
-          href: "/activities/recent",
-        },
+        // {
+        //   label: 'Recent & Upcoming activities (This month)',
+        //   subLabel: 'Up-and-coming Designers',
+        //   href: "/activities",
+        // },
       ],
     },
     {
@@ -251,7 +251,7 @@ import LOGO from "../../imgs/logo.png"
       ],
     },
     {
-      label: 'Learn Design',
+      label: 'Join Club',
       href: '#',
     },
   ];

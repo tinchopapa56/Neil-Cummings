@@ -30,7 +30,7 @@ import { useStore } from '../../../app/stores/store'
         
         {/* All - Musicians - Events */}
 
-        <Stack w="xs" bg="white" boxShadow={"sm"} divider={<Divider />}>
+        <Stack w="xs" bg="linear-gradient(to right top, #f9f871, #fee96c, #ffdb6a, #ffcd69, #ffc06a, #ffbd6a, #ffba6a, #ffb76a, #ffbe68, #ffc566, #ffcc65, #ffd364);" boxShadow={"sm"} divider={<Divider />}>
           {[{name:"ALL",action:"all"}, {name:"GOING",action:"isGoing"} ,{name:"HOSTING",action:"isHost"}].map(filter => (
 
             <Box p={2} borderRadius="sm" cursor="pointer" _hover={{bg:"green.100"}}>
@@ -42,7 +42,7 @@ import { useStore } from '../../../app/stores/store'
           ))}
         </Stack>
 
-        <Stack w="xs" bg="white" boxShadow={"sm"} divider={<Divider />}>
+        <Stack w="xs" boxShadow={"sm"} divider={<Divider />} bg="linear-gradient(to right top, #f9f871, #fee96c, #ffdb6a, #ffcd69, #ffc06a, #ffbd6a, #ffba6a, #ffb76a, #ffbe68, #ffc566, #ffcc65, #ffd364);">
           {["city" ,"date"].map(filter => (
             <FormControl p={2} as={GridItem} colSpan={[6, 3]}>
               <FormLabel
@@ -71,12 +71,11 @@ import { useStore } from '../../../app/stores/store'
               </Select>
           </FormControl>
           ))}
-          <FormControl as={GridItem} colSpan={[6, 3]} py={4} fontSize={"xl"} mt="2%">
-              <FormLabel htmlFor="category" fontWeight="normal" color="gray.700">
+          <FormControl p={2} as={GridItem} colSpan={[6, 3]}>
+              <FormLabel htmlFor="category" fontSize="sm" fontWeight="md" color="gray.700" _dark={{   color: 'gray.50', }}>
                 Category
               </FormLabel>
-              <Select id="category" autoComplete="category" placeholder="Select Category" focusBorderColor="brand.400" shadow="sm" size="xl" w="full" rounded="md"
-              name="category" value={values.category}  onChange={handleChange}>
+              <Select id="category" focusBorderColor="brand.400" shadow="sm" size="sm" w="full" rounded="md"  autoComplete="category" placeholder="Select Category" name="category" value={values.category}  onChange={handleChange}>
                 <option value="drinks">drinks</option>
                 <option value="culture">culture</option>
                 <option value="music">music</option>

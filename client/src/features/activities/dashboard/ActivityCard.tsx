@@ -70,26 +70,21 @@ export default function ActivityCard({activity}: Props) {
                   {activity.description.length > 36 ? (activity.description.slice(0,26) + "...") : activity.description }
                   </Text>
                 </Box>
-                <Flex alignItems="center" color="gray.500">
-                  {["a"].map( info  => (
-                    <>
-                      <Fragment key={info}>
+                <Flex justify={"space-between"} alignItems="center" color="gray.500">
+                  {activity.isHost && (<Button zIndex={2} variant="outline" color="blue" size="sm">Hosting</Button>)}
+                  {!activity.isHost && activity.isGoing && ( <Button zIndex={2} variant="outline" size="sm" color="green">Going</Button>)}
+                    <Stack direction="row" align="center">
+                      <Fragment>
                         <Text fontSize='sm'>{activity.city}</Text>
                           <chakra.span mx={2} fontSize='sm'>
                             |     
                           </chakra.span>
                         </Fragment>
-                        <Fragment key={info}>
-                        <Text fontSize='sm'>{activity.hostUsername}</Text>
-                          <chakra.span mx={2} fontSize={{ base: 'sm', sm: 'md' }}>
-                            |
-                          </chakra.span>
-                      </Fragment>
-                      <Fragment key={info}>
+                      <Fragment>
                         <Text fontSize='sm'>{activity.venue}</Text>
                       </Fragment>
-                    </>
-                  ))}
+                    </Stack>
+                  
                 </Flex>
 
                 

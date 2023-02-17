@@ -1,8 +1,6 @@
-import { Container, Stack, Flex, Box,Link, Heading, Text, Button, Image, Icon, IconButton, createIcon, IconProps, useColorModeValue,} from '@chakra-ui/react';
+import { Container, Stack, Flex, Box,Link, Heading, Text, Button, Image, Icon,  IconProps,} from '@chakra-ui/react';
 import React from 'react'
-// import {Box, Text, Button, Flex, Stack, Image, Link} from "@chakra-ui/react";
 import I1 from "../../imgs/cover.png";
-import I4 from "../../imgs/4.jpg";
 import { useStore } from '../../app/stores/store';
 // import { Link } from 'react-router-dom';
 
@@ -34,23 +32,27 @@ const {commonStore} = useStore();
                 bg: 'red.400',
                 zIndex: -1,
               }}>
-              Bandify,
+              {/* Bandify, */}
+              Meetlify
             </Text>
             <br />
             <Text as={'span'} color={'red.400'}>
-              Connecting Music Makers & Bussines owners
+              {/* Connecting Music Makers & Bussines owners */}
+              Building connections & comunnities for free
             </Text>
           </Heading>
           <Text fontSize={"2xl"} color={'gray.500'}>
-            Bandify´s purpose is to connect musicians with business owners looking for enterteinment & show
-            Musicians & Busciness owners can create an account & set up shows
+            {/* Bandify´s purpose is to connect musicians with business owners looking for enterteinment & show
+            Musicians & Busciness owners can create an account & set up shows */}
+            Meetlify´s purpose is to connect people with similar interests, organize events & breed new friendships
+            Everyone can create an account, join existing events or propse a create a new one
           </Text>
           <Stack
             spacing={{ base: 4, sm: 6 }}
             direction={{ base: 'column', sm: 'row' }}>
             {commonStore.token ? (
-              <Button rounded={'full'} size={'lg'} fontWeight={'normal'} px={6} colorScheme={'red'} bg={'red.400'} _hover={{ bg: 'red.500' }}>
-              Go to shows
+              <Button as={Link} href="/activities" rounded={'full'} size={'lg'} fontWeight={'normal'} px={6} colorScheme={'red'} bg={'red.400'} _hover={{ bg: 'red.500' }}>
+              Go to events
               </Button>
             ):(
               <Stack pt={4} spacing={4} direction="row">
@@ -137,42 +139,3 @@ export const Blob = (props: IconProps) => {
     </Icon>
   );
 };
-
-
-
-// import React from 'react'
-// import {Box, Text, Button, Flex, Stack, Image, Link} from "@chakra-ui/react";
-// import I1 from "../../imgs/cover.png";
-// import I4 from "../../imgs/4.jpg";
-// import { useStore } from '../../app/stores/store';
-// // import { Link } from 'react-router-dom';
-
-// export default function HomePage() {
-
-//   const {commonStore} = useStore();
-//   console.log(commonStore, "homepage")
-  
-
-//   return (
-//     <Flex h={"95vh"} color="white" justify={"center"} backgroundPosition="center" backgroundSize="cover" backgroundImage={I1}>
-//       <Box w={"30vw"} color="black" left="calc(7.5vw - 32px)" pr="32px" h="50vh" top="25vh" gap="32px" position="fixed">
-//         <Text color="white" as="h1" fontSize={"4xl"}>Bandify</Text>
-//         <Text color="white" pt={4}>Bandify´s purpose is to connect musicians with business owners looking for enterteinment & show</Text>
-//         <Text pt={4} color="brand">Musicians & Busciness owners can create an account & set up shows</Text>
-//         {commonStore.token ? (
-//           <Button m="0 auto" as={Link} href="/activities">Go to activities</Button>
-//           ):(
-//           <Stack pt={4} spacing={4} direction="row">
-//             <Button as={Link} href="/login" w="50%">Log In</Button>
-//             <Button as={Link} href="/register" w="50%">Register</Button>
-//           </Stack>
-//         )}
-//       </Box>
-//       {/* <Stack overflow="auto"> */}
-//         <Box w={"35vw"} right="calc(7.5vw - 32px)" pr="32px" h="50vh" top="25vh" gap="32px" position="absolute" color="white">
-//           <Image objectFit="cover" src={I1} alt={'Interface Reactivities'} />
-//           <Text color="white">Connecting Music makers with Bussiness Owners Music Lovers</Text>
-//         </Box>
-//     </Flex>
-//   )
-// }
