@@ -9,13 +9,8 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-// Assets
-
-// Custom components
-// import Card from "components/Card/Card";
-// import CardBody from "components/Card/CardBody";
-// import CardHeader from "components/Card/CardHeader";
 import React from "react";
+import { toast } from "react-toastify";
 
 const Conversations:React.FC = () => {
   // Chakra color mode
@@ -24,7 +19,8 @@ const Conversations:React.FC = () => {
   const avatar = "https://bit.ly/dan-abramov"
 
   return (
-    <Card p='16px'>
+    <Card cursor="pointer" onClick={() => toast('🦄 Coming Soon!', {position: "bottom-right",autoClose: 3000,hideProgressBar: false,closeOnClick: true,pauseOnHover: true,draggable: true,progress: undefined,theme: "dark",})
+  } p='16px'>
       <CardHeader p='12px 5px' mb='12px'>
         <Text fontSize='lg' color={textColor} fontWeight='bold'>Conersations </Text>
       </CardHeader>

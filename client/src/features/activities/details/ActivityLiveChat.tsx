@@ -29,21 +29,6 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
             <Divider py={2} borderColor="green.200" />
             <Box py={6}>
                 <Stack spacing={4} divider={<Divider />}>
-                    {/* {liveCommentStore.comments.map(comment => (
-                        <Stack direction="row" key={comment.id}>
-                            <Avatar src={comment.image || `${I1}`} />
-                            <Box>
-                                <Stack align="center" direction="row" spacing={2}>
-                                    <Text fontWeight={"bold"} as={Link} to={`/profiles/${comment.username}`}>
-                                        {comment.displayName || "Name"} 
-                                    </Text>
-                                    <Text fontSize={"sm"} color="gray.400">({formatDistanceToNow(comment.createdAt)} ago)</Text>
-                                </Stack>
-                                <Text>{comment.body}</Text>
-                            </Box>
-                            
-                        </Stack>
-                    ))} */}
                     {liveCommentStore.comments.map(comment => {
                         return <Stack direction="row" key={comment.id}>
                             <Avatar src={comment.image || `${I1}`} />

@@ -6,6 +6,8 @@ import { Card, CardBody, CardHeader, Flex, Icon, Link, Text, useColorModeValue }
 // import CardHeader from "components/Card/CardHeader";
 import React from "react";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import {BiEdit} from "react-icons/bi"
+import { toast } from "react-toastify";
 
 interface Props {
   title: string,
@@ -25,6 +27,9 @@ const Info:React.FC<Props> = ({ title, description, name, mobile, email, locatio
       <CardHeader p='12px 5px' mb='12px'>
         <Text fontSize='lg' color={textColor} fontWeight='bold'>
           {title}
+          <Icon ml={2} as={BiEdit} cursor="pointer"
+          onClick={() => toast('🦄 Coming Soon!', {position: "bottom-right",autoClose: 3000,hideProgressBar: false,closeOnClick: true,pauseOnHover: true,draggable: true,progress: undefined,theme: "dark",})
+          } />
         </Text>
       </CardHeader>
       <CardBody px='5px'>

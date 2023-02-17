@@ -36,11 +36,15 @@ const ProfilePage = () => {
    useEffect(() => {
     if(username){
       profileStore.loadProfile(username)
-      const ver = profileStore.loadProfileEvents(username, "default")
-      console.log(ver)
+      // profileStore.listFollowings("")
+      profileStore.loadProfileEvents(username, "default")
     }
     
    },[username, profileStore.loadProfile])
+
+   useEffect(() => {
+    profileStore.listFollowings("followers"); //following o follower
+  },[profileStore.listFollowings, profileStore.profile?.followingsCount, profileStore.profile?.followersCount])
 
 
    if(profileStore.isloadingProfile == true) {
